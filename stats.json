@@ -1,0 +1,142 @@
+[
+    {
+        "name": "Kevin",
+        "attemptedFG": [
+            {
+                "x": 205,
+                "y": -25,
+                "made": true,
+                "assisted": false
+            },
+            {
+                "x": 23,
+                "y": -10,
+                "made": false,
+                "assisted": null
+            },
+            {
+                "x": -210,
+                "y": -13,
+                "made": true,
+                "assisted": true
+            },
+            {
+                "x": 56,
+                "y": -76,
+                "made": true,
+                "assisted": true
+            },
+            {
+                "x": 0,
+                "y": -250,
+                "made": true,
+                "assisted": false
+            },
+            {
+                "x": -50,
+                "y": -2,
+                "made": false,
+                "assisted": false
+            },
+            {
+                "x": "333",
+                "y": "97",
+                "made": "true",
+                "assisted": "false"
+            },
+            {
+                "x": "571",
+                "y": "389",
+                "made": "true",
+                "assisted": "false"
+            },
+            {
+                "x": "172",
+                "y": "171",
+                "made": "true",
+                "assisted": "false"
+            },
+            {
+                "x": "348",
+                "y": "185",
+                "made": "true",
+                "assisted": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": true
+            },
+            {
+                "made": true
+            },
+            {
+                "made": false
+            }
+        ],
+        "rebounds": 5,
+        "assists": 8,
+        "steals": 2,
+        "blocks": 1,
+        "turnovers": 3,
+        "fouls": 4
+    },
+    {
+        "name": "Kevin",
+        "attemptedFG": [
+            {
+                "x": 205,
+                "y": -25,
+                "made": true,
+                "assisted": false
+            },
+            {
+                "x": 23,
+                "y": -10,
+                "made": false,
+                "assisted": null
+            },
+            {
+                "x": -210,
+                "y": -13,
+                "made": true,
+                "assisted": true
+            },
+            {
+                "x": 56,
+                "y": -76,
+                "made": true,
+                "assisted": true
+            },
+            {
+                "x": 0,
+                "y": -250,
+                "made": true,
+                "assisted": false
+            },
+            {
+                "x": -50,
+                "y": -2,
+                "made": false,
+                "assisted": false
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": true
+            },
+            {
+                "made": true
+            },
+            {
+                "made": false
+            }
+        ],
+        "rebounds": 5,
+        "assists": 8,
+        "steals": 2,
+        "blocks": 1,
+        "turnovers": 3,
+        "fouls": 4
+    }
+]

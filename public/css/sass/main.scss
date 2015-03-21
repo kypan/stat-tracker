@@ -1,0 +1,35 @@
+#stat-tracker{
+	.clock{
+
+	}
+	.current-players{
+
+	}
+	.shot-chart{
+
+	}
+	.other-stats{
+
+	}
+	.box-score{
+		.box-score-table{
+			border-collapse: collapse;
+			.box-score-header{
+				th{
+					border: 1px solid;
+					border-bottom: 2px solid;
+					padding: 5px;
+					text-align: center;
+				}
+			}
+			.box-score-row{
+				td{
+					border: 1px solid;
+					padding: 5px;
+					text-align: center;
+				}
+
+			}
+		}
+	}
+}
