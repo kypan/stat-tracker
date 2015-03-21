@@ -1,0 +1,67 @@
+head(data-ng-controller='PageTitleController')
+  //-Keen
+  script.
+    !function(a,b){if(void 0===b[a]){b["_"+a]={},b[a]=function(c){b["_"+a].clients=b["_"+a].clients||{},b["_"+a].clients[c.projectId]=this,this._config=c},b[a].ready=function(c){b["_"+a].ready=b["_"+a].ready||[],b["_"+a].ready.push(c)};for(var c=["addEvent","setGlobalProperties","trackExternalLink","on"],d=0;d<c.length;d++){var e=c[d],f=function(a){return function(){return this["_"+a]=this["_"+a]||[],this["_"+a].push(arguments),this}};b[a].prototype[e]=f(e)}var g=document.createElement("script");g.type="text/javascript",g.async=!0,g.src="https://d26b395fwzu5fz.cloudfront.net/3.0.5/keen.min.js";var h=document.getElementsByTagName("script")[0];h.parentNode.insertBefore(g,h)}}("Keen",this);
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  meta(name='viewport', content='width=device-width,initial-scale=1')
+  meta(name='apple-itunes-app' content='app-id=955544523')
+
+  title(ng-if="pageTitleService.pageTitle !== 'Vessel'" ng-bind="pageTitleService.pageTitle")
+  meta(http-equiv='Content-type', content='text/html;charset=UTF-8')
+  meta(name="keywords", content="Vessel, Science, Collaboration, Research, Lab, Notebook, Experiment")
+  meta(name="description", content="Vessel is a research management platform that allows scientists to track, organize, and share their experiments seamlessly with the connected world. Keep tabs on your experiments with the mobile app and never lose track of your projects and data again.")
+
+  link(href='/img/icons/favicon.png', rel='shortcut icon', type='image/x-icon')
+
+  meta(property='fb:app_id', content='APP_ID')
+  meta(property='og:title', content='Vessel Science – Research Management Platform for the Connected World')
+  meta(property='og:description', content='Vessel is a research management platform that allows scientists to track, organize, and share their experiments seamlessly with the connected world. Keep tabs on your experiments with the mobile app and never lose track of your projects and data again.')
+  meta(property='og:type', content='website')
+  meta(property='og:url', content='https://app.vesselsci.com')
+  meta(property='og:image', content='https://s3.amazonaws.com/vessel_static/img/public_placeholder.png')
+  meta(property='og:site_name', content='Vessel Science')
+  meta(property='fb:admins', content='APP_ADMIN')
+
+
+  //- Styles and fonts
+  if (process.env.NODE_ENV == 'production')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='//s3.amazonaws.com/vessel_static/vessel_style.css?v=#{css_checksum}')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+  else if (process.env.NODE_ENV == 'staging')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='//s3.amazonaws.com/vessel_static/vessel_style_staging.css?v=#{css_checksum}')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+  else if (process.env.NODE_ENV == 'test')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='//s3.amazonaws.com/vessel_static/vessel_style_test.css?v=#{css_checksum}')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+  else
+    link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/lib/font-awesome/css/font-awesome.min.css')
+  link(href='//fonts.googleapis.com/css?family=Exo+2:400,100,700|Open+Sans:400' rel='stylesheet' type='text/css')
+  //- New Relic Browser Monitoring
+  if (process.env.NODE_ENV == 'production')
+    != newrelic.getBrowserTimingHeader()
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-53734719-1', 'auto');
+      ga('send', 'pageview');
+
+  //if lt IE 9
+    script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+
+
+
+
+
+
+
+
+
+
