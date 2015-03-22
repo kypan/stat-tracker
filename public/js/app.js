@@ -76,7 +76,7 @@ var Main = React.createClass({
 			<div className="main">
 				<Clock />
 				<CurrentPlayers />
-				<ShotChart data={this.state.data} onShotChartSubmit={this.handleShotChartSubmit} />
+				<ShotChart data={this.state.data} onShotChartSubmit={this.handleShotChartSubmit} ref="shotChart"/>
 				<OtherStats />
 				<BoxScore data={this.state.data} onResetStats={this.handleResetStats} />
 			</div>
@@ -92,7 +92,7 @@ var ShotChart = React.createClass({
 	modalY: null,
 	made: false,
 	getInitialState: function() {
-		return {showShooterModal: false, showAssisterModal: false};
+		return {showShooterModal: false, showAssisterModal: false, showShotMap: false};
 	},
 	handleClick: function(e) {
 		e.preventDefault();
@@ -119,6 +119,12 @@ var ShotChart = React.createClass({
 		this.props.onShotChartSubmit({number: this.player, x: this.posX, y: this.posY, made: this.made, assistedBy: data.assister});
 		this.reset();
 	},
+	toggleShotMap: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var show = !this.state.showShotMap;
+		this.setState({showShotMap: show});
+	},
 	reset: function() {
 		this.posX = null;
 		this.posY = null;
@@ -126,12 +132,14 @@ var ShotChart = React.createClass({
 		modalY: null;
 		this.player = null;
 		this.made = false;
-		this.setState({showShooterModal: false, showAssisterModal: false});
+		this.setState({showShooterModal: false, showAssisterModal: false, showShotMap: false});
 	},
 	render: function() {
 		return (
 			<div className="shot-chart" onClick={this.handleClick}>
 				<img src="/img/shot_chart.png" />
+				<button className="toggle-btn" onClick={this.toggleShotMap}>Toggle Shot Map</button>
+				{this.state.showShotMap ? <ShotChartMap data={this.props.data} /> : null}
 				{this.state.showShooterModal ?
 				 <ShotChartShooterModal data={this.props.data}
 				 												modalX={this.modalX}
@@ -147,6 +155,46 @@ var ShotChart = React.createClass({
 		);
 	}
 });
+
+var ShotChartMap = React.createClass({
+	componentDidMount: function() {
+		_.forEach(this.props.data, function(player) {
+			_.forEach(player.attemptedFG, function(fg, index) {
+				var selector = '#' + player.number + '-' + index.toString();
+				$(selector).css({
+					left: fg.x + 337,
+					top: -(fg.y)
+				});
+			});
+		});
+	},
+	render: function() {
+		var allShots = this.props.data.map(function(player) {
+			var playerShots = player.attemptedFG.map(function(fg, index) {
+				if(fg.made === "true") {
+					var html = '<div className=\"made-shot\" id=\"'+player.number+'-'+index.toString()+'\"><i className=\"fa fa-circle\"></i></div>';
+					return (
+						$.parseHTML(html)
+					);
+				}
+				else {
+					var html = '<div className=\"missed-shot\" id=\"'+player.number+'-'+index.toString()+'\"><i className=\"fa fa-times\"></i></div>';
+					return (
+						$.parseHTML(html)
+					);
+				}
+			});
+			return (
+					{playerShots}
+			);
+		});
+		return (
+			<div className="shot-chart-map">
+				{allShots}
+			</div>
+		);
+	}
+})
 
 var ShotChartShooterModal = React.createClass({
 	getInitialState: function() {

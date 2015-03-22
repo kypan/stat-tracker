@@ -6,8 +6,29 @@
 
 	}
 	.shot-chart{
+		position: relative;
 		width: 674px;
 		cursor: crosshair;
+		.toggle-btn{
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+			cursor: pointer !important;
+		}
+		.shot-chart-map{
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background: none;
+			.made-shot{
+				color: green;
+				transform: translateX(-50%), translateY(-50%);
+			}
+			.missed-shot{
+				color: red;
+				transform: translateX(-50%), translateY(-50%);
+			}
+		}
 		.modal-bg{
 			position: fixed;
 			left: 0;

@@ -14,6 +14,12 @@
                 "y": "-93",
                 "made": "true",
                 "assistedBy": "66"
+            },
+            {
+                "x": "-152",
+                "y": "-91",
+                "made": "true",
+                "assistedBy": "13"
             }
         ],
         "attemptedFT": [],
@@ -37,7 +43,7 @@
         ],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": "0",
+        "assists": 1,
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -56,11 +62,16 @@
                 "x": "-97",
                 "y": "-304",
                 "made": "false"
+            },
+            {
+                "x": "121",
+                "y": "-182",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": 1,
+        "assists": 2,
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -69,7 +80,14 @@
     {
         "number": "66",
         "name": "Bryan",
-        "attemptedFG": [],
+        "attemptedFG": [
+            {
+                "x": "-11",
+                "y": "-388",
+                "made": "true",
+                "assistedBy": "4"
+            }
+        ],
         "attemptedFT": [],
         "rebounds": "0",
         "assists": 1,
