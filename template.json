@@ -2,23 +2,10 @@
     {
         "number": "0",
         "name": "Kevin",
-        "attemptedFG": [
-            {
-                "x": "16",
-                "y": "-121",
-                "made": "true",
-                "assistedBy": "13"
-            },
-            {
-                "x": "-2",
-                "y": "-93",
-                "made": "true",
-                "assistedBy": "66"
-            }
-        ],
+        "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": 1,
+        "assists": "0",
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -27,14 +14,7 @@
     {
         "number": "4",
         "name": "David",
-        "attemptedFG": [
-            {
-                "x": "-1",
-                "y": "-236",
-                "made": "true",
-                "assistedBy": "0"
-            }
-        ],
+        "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
         "assists": "0",
@@ -46,21 +26,10 @@
     {
         "number": "13",
         "name": "Charles",
-        "attemptedFG": [
-            {
-                "x": "-222",
-                "y": "-150",
-                "made": "false"
-            },
-            {
-                "x": "-97",
-                "y": "-304",
-                "made": "false"
-            }
-        ],
+        "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": 1,
+        "assists": "0",
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -72,7 +41,7 @@
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": 1,
+        "assists": "0",
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
