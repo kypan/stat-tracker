@@ -157,44 +157,57 @@ var ShotChart = React.createClass({
 });
 
 var ShotChartMap = React.createClass({
-	componentDidMount: function() {
-		_.forEach(this.props.data, function(player) {
-			_.forEach(player.attemptedFG, function(fg, index) {
-				var selector = '#' + player.number + '-' + index.toString();
-				$(selector).css({
-					left: fg.x + 337,
-					top: -(fg.y)
-				});
-			});
-		});
-	},
 	render: function() {
-		var allShots = this.props.data.map(function(player) {
-			var playerShots = player.attemptedFG.map(function(fg, index) {
-				if(fg.made === "true") {
-					var html = '<div className=\"made-shot\" id=\"'+player.number+'-'+index.toString()+'\"><i className=\"fa fa-circle\"></i></div>';
-					return (
-						$.parseHTML(html)
-					);
-				}
-				else {
-					var html = '<div className=\"missed-shot\" id=\"'+player.number+'-'+index.toString()+'\"><i className=\"fa fa-times\"></i></div>';
-					return (
-						$.parseHTML(html)
-					);
-				}
-			});
-			return (
-					{playerShots}
-			);
-		});
 		return (
 			<div className="shot-chart-map">
-				{allShots}
+				{this.props.data.map(function(player) {
+					return (
+						<ShotMarkerArray player={player} key={player.number} />
+					);
+				})}
 			</div>
 		);
 	}
-})
+});
+
+var ShotMarkerArray = React.createClass({
+	render: function() {
+		return (
+			<div className="shot-marker-array">
+				{this.props.player.attemptedFG.map(function(fg, index) {
+					return (
+						<ShotMarker fg={fg} key={index}/>
+					);
+				})}
+			</div>
+		);
+	}
+});
+
+var ShotMarker = React.createClass({
+	componentDidMount: function() {
+		$(React.findDOMNode(this.refs.shot)).css({
+			left: Number(this.props.fg.x) + 337,
+			top: -(this.props.fg.y)
+		});
+		//$(React.findDOMNode(this.refs.shot)).css('top', this.props.fg.y);
+	},
+	render: function() {
+		if(this.props.fg.made === "true") {
+			var markerClass = "made-shot";
+			var faClass = "fa fa-circle";
+		}
+		else {
+			var markerClass = "missed-shot";
+			var faClass = "fa fa-times";
+		}
+		return (
+			<div className={markerClass} ref="shot">
+				<i className={faClass}></i>
+			</div>
+		);
+	}
+});
 
 var ShotChartShooterModal = React.createClass({
 	getInitialState: function() {
@@ -327,40 +340,6 @@ var BoxScore = React.createClass({
 		this.props.onResetStats();
 	},
 	render: function() {
-		var rows = this.props.data.map(function(player, index) {
-			var attemptedFG = player.attemptedFG.length;
-			var madeFG = _.filter(player.attemptedFG, function(fg) {
-				return fg.made === "true";
-			}).length;
-			var attemptedThreesList = _.filter(player.attemptedFG, function(fg) {
-				return (Math.pow(Number(fg.x), 2) + Math.pow(Number(fg.y), 2)) > 90000;
-			})
-			var attemptedThrees = attemptedThreesList.length;
-			var madeThrees = _.filter(attemptedThreesList, function(fg) {
-				return fg.made === "true";
-			}).length;
-			var attemptedFT = player.attemptedFT.length;
-			var madeFT = _.filter(player.attemptedFT, function(ft) {
-				return ft.made === "true";
-			}).length;
-			var points = (madeFG - madeThrees) * 2 + madeThrees * 3 + madeFT;
-			return (
-				<tr className="box-score-row">
-					<td>{player.number}</td>
-					<td>{player.name}</td>
-					<td>{madeFG}-{attemptedFG}</td>
-					<td>{madeThrees}-{attemptedThrees}</td>
-					<td>{madeFT}-{attemptedFT}</td>
-					<td>{player.rebounds}</td>
-					<td>{player.assists}</td>
-					<td>{player.steals}</td>
-					<td>{player.blocks}</td>
-					<td>{player.turnovers}</td>
-					<td>{player.fouls}</td>
-					<td>{points}</td>
-				</tr>
-			);
-		});
 		return (
 			<div>
 				<div className="box-score">
@@ -379,11 +358,51 @@ var BoxScore = React.createClass({
 							<th>PF</th>
 							<th>PTS</th>
 						</tr>
-						{rows}
+						{this.props.data.map(function(player, index) {
+							return <BoxScoreRow player={player} key={player.number}/>
+						})}
 					</table>
 				</div>
 				<button onClick={this.resetStats}>RESET STATS</button>
 			</div>
+		);
+	}
+});
+
+var BoxScoreRow = React.createClass({
+	render: function() {
+		var player = this.props.player;
+		var attemptedFG = player.attemptedFG.length;
+		var madeFG = _.filter(player.attemptedFG, function(fg) {
+			return fg.made === "true";
+		}).length;
+		var attemptedThreesList = _.filter(player.attemptedFG, function(fg) {
+			return (Math.pow(Number(fg.x), 2) + Math.pow(Number(fg.y), 2)) > 90000;
+		})
+		var attemptedThrees = attemptedThreesList.length;
+		var madeThrees = _.filter(attemptedThreesList, function(fg) {
+			return fg.made === "true";
+		}).length;
+		var attemptedFT = player.attemptedFT.length;
+		var madeFT = _.filter(player.attemptedFT, function(ft) {
+			return ft.made === "true";
+		}).length;
+		var points = (madeFG - madeThrees) * 2 + madeThrees * 3 + madeFT;
+		return (
+			<tr className="box-score-row">
+				<td>{player.number}</td>
+				<td>{player.name}</td>
+				<td>{madeFG}-{attemptedFG}</td>
+				<td>{madeThrees}-{attemptedThrees}</td>
+				<td>{madeFT}-{attemptedFT}</td>
+				<td>{player.rebounds}</td>
+				<td>{player.assists}</td>
+				<td>{player.steals}</td>
+				<td>{player.blocks}</td>
+				<td>{player.turnovers}</td>
+				<td>{player.fouls}</td>
+				<td>{points}</td>
+			</tr>
 		);
 	}
 });
