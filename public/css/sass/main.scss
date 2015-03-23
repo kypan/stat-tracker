@@ -7,7 +7,9 @@
 	}
 	.shot-chart{
 		position: relative;
+		display: inline-block;
 		width: 674px;
+		margin: 20px 0 0 20px;
 		cursor: crosshair;
 		.toggle-btn{
 			position: absolute;
@@ -23,6 +25,14 @@
 			width: 100%;
 			height: 100%;
 			background: none;
+			#shot-map-player-filter {
+				position: absolute;
+				z-index: 1000;
+				right: 134px;
+				bottom: 14px;
+				width: 125px;
+				cursor: pointer !important;
+			}
 			.made-shot{
 				position: absolute;
 				color: green;
@@ -58,6 +68,9 @@
 		  	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 		  	padding: 10px;
 		  	text-align: center;
+		  	#shooter-options, #assister-options {
+		  		pointer: cursor !important;
+		  	}
 		}
 
 	}
@@ -65,6 +78,9 @@
 
 	}
 	.box-score{
+		position: absolute;
+		display: inline-block;
+		margin: 20px 0 0 20px;
 		.box-score-table{
 			border-collapse: collapse;
 			.box-score-header{
@@ -84,5 +100,10 @@
 
 			}
 		}
+	}
+	.reset-btn{
+		position: absolute;
+		top: 20px;
+		right: 20px;
 	}
 }

@@ -17,23 +17,11 @@ app.get('/stats', function(req, res) {
 });
 
 app.put('/stats/reset', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
-    var stats = JSON.parse(data);
-     _.forEach(stats, function(player) {
-      player.attemptedFG = [];
-      player.attemptedFT = [];
-      player.rebounds = "0";
-      player.assists = "0";
-      player.steals = "0";
-      player.blocks = "0";
-      player.turnovers = "0";
-      player.fouls = "0";
-    });
-    console.log(stats);
-    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+  fs.readFile('statsTemplate.json', function(err, data) {
+    fs.writeFile('stats.json', data, function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
-      res.send(JSON.stringify(stats));
+      res.send(data);
     });
   });
 });

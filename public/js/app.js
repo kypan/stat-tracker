@@ -4,10 +4,7 @@ var Main = React.createClass({
 			url: '/stats',
 			dataType: 'json',
 			success: function(data) {
-				sortedPlayers = _.sortBy(data, function(player) {
-					return Number(player.number);
-				});
-				this.setState({data: sortedPlayers});
+				this.setState({data: data});
 			}.bind(this),
 			error: function(xhr, status, err) {
         console.error('/stats', status, err.toString());
@@ -21,43 +18,22 @@ var Main = React.createClass({
 		this.loadStatsFromServer();
     setInterval(this.loadStatsFromServer, this.props.pollInterval);
 	},
-	handleShotChartSubmit: function(FGAttempt) {
-		var players = this.state.data;
-		var i = _.findIndex(players, function(p) {
-			return p.number === FGAttempt.number;
-		});
-		players[i].attemptedFG.push(_.omit(FGAttempt, 'number'));
-		this.setState({data: players}, function() {
-			$.ajax({
-        url: '/stats/recordShot',
-        dataType: 'json',
-        type: 'POST',
-        data: FGAttempt,
-        success: function(data) {
-          this.setState({data: data});
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error('/stats/shot', status, err.toString());
-        }.bind(this)
-      });
-		});
+	handleRecordShot: function(FGAttempt) {
+		$.ajax({
+      url: '/stats/recordShot',
+      dataType: 'json',
+      type: 'POST',
+      data: FGAttempt,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error('/stats/shot', status, err.toString());
+      }.bind(this)
+    });
 	},
 	handleResetStats: function() {
-		var resetObject = {
-			attemptedFG: [],
-			attemptedFT: [],
-			rebounds: "0",
-			assists: "0",
-			steals: "0",
-			blocks: "0",
-			turnovers: "0",
-			fouls: "0"
-		};
-		var players = this.state.data;
-		_.forEach(players, function(player) {
-			_.assign(player, resetObject);
-		});
-		// this.setState({data: players}, function() {
+		if(window.confirm("Are you sure?")) {
 			$.ajax({
 				url: '/stats/reset',
 				dataType: 'json',
@@ -65,20 +41,23 @@ var Main = React.createClass({
 				success: function(data) {
 					this.setState({data: data});
 				}.bind(this),
-        error: function(xhr, status, err) {
-          console.error('/stats/reset', status, err.toString());
-        }.bind(this)
+	      error: function(xhr, status, err) {
+	        console.error('/stats/reset', status, err.toString());
+	      }.bind(this)
 			});
-		// });
+		}
+		else
+			React.findDOMNode(this.refs.resetButton).blur();
 	},
 	render: function() {
 		return (
 			<div className="main">
 				<Clock />
 				<CurrentPlayers />
-				<ShotChart data={this.state.data} onShotChartSubmit={this.handleShotChartSubmit} ref="shotChart"/>
+				<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
+				<BoxScore data={this.state.data} />
 				<OtherStats />
-				<BoxScore data={this.state.data} onResetStats={this.handleResetStats} />
+				<button className="btn btn-lg btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">RESET STATS</button>
 			</div>
 		);
 	}
@@ -106,7 +85,7 @@ var ShotChart = React.createClass({
 	},
 	handleShooterSubmit: function(data) {
 		if(!data.made) {
-			this.props.onShotChartSubmit({number: data.player, x: this.posX, y: this.posY, made: data.made});
+			this.props.onRecordShot({number: data.player, x: this.posX, y: this.posY, made: data.made});
 			this.reset();
 		}
 		else {
@@ -116,7 +95,7 @@ var ShotChart = React.createClass({
 		}
 	},
 	handleAssisterSubmit: function(data) {
-		this.props.onShotChartSubmit({number: this.player, x: this.posX, y: this.posY, made: this.made, assistedBy: data.assister});
+		this.props.onRecordShot({number: this.player, x: this.posX, y: this.posY, made: this.made, assistedBy: data.assister});
 		this.reset();
 	},
 	toggleShotMap: function(e) {
@@ -124,6 +103,7 @@ var ShotChart = React.createClass({
 		e.stopPropagation();
 		var show = !this.state.showShotMap;
 		this.setState({showShotMap: show});
+		React.findDOMNode(this.refs.toggleButton).blur();
 	},
 	reset: function() {
 		this.posX = null;
@@ -132,13 +112,13 @@ var ShotChart = React.createClass({
 		modalY: null;
 		this.player = null;
 		this.made = false;
-		this.setState({showShooterModal: false, showAssisterModal: false, showShotMap: false});
+		this.setState({showShooterModal: false, showAssisterModal: false});
 	},
 	render: function() {
 		return (
 			<div className="shot-chart" onClick={this.handleClick}>
 				<img src="/img/shot_chart.png" />
-				<button className="toggle-btn" onClick={this.toggleShotMap}>Toggle Shot Map</button>
+				<button className="btn btn-sm btn-primary toggle-btn" onClick={this.toggleShotMap} ref="toggleButton">Toggle Shot Map</button>
 				{this.state.showShotMap ? <ShotChartMap data={this.props.data} /> : null}
 				{this.state.showShooterModal ?
 				 <ShotChartShooterModal data={this.props.data}
@@ -157,14 +137,50 @@ var ShotChart = React.createClass({
 });
 
 var ShotChartMap = React.createClass({
+	selectedPlayer: null,
+	getInitialState: function() {
+		return {selectedPlayer: false};
+	},
+	handleFilterPlayerFocus: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		playerDropdown = document.getElementById("shot-map-player-filter");
+		_.forEach(this.props.data, function(player) {
+			playerDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
+		});
+		$('#shot-map-player-filter').change(function() {
+			var number = $('select option:selected').val();
+			if(number) {
+				this.selectedPlayer = _.find(this.props.data, function(player) {
+															return player.number === number;
+														});
+				console.log(this.selectedPlayer);
+				this.setState({selectedPlayer: true});
+			}
+			else
+				this.setState({selectedPlayer: false});
+		}.bind(this));
+	},
+	handleFilterPlayerClick: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	},
 	render: function() {
 		return (
 			<div className="shot-chart-map">
-				{this.props.data.map(function(player) {
-					return (
-						<ShotMarkerArray player={player} key={player.number} />
-					);
-				})}
+				{this.state.selectedPlayer ?
+					<ShotMarkerArray player={this.selectedPlayer} /> :
+					this.props.data.map(function(player) {
+						return (
+							<ShotMarkerArray player={player} key={player.number} />
+						);
+					})
+				}
+				<select id="shot-map-player-filter" onFocus={this.handleFilterPlayerFocus}
+																						onClick={this.handleFilterPlayerClick}
+																						ref="playerFilter">
+					<option value="" selected>All</option>
+				</select>
 			</div>
 		);
 	}
@@ -190,7 +206,12 @@ var ShotMarker = React.createClass({
 			left: Number(this.props.fg.x) + 337,
 			top: -(this.props.fg.y)
 		});
-		//$(React.findDOMNode(this.refs.shot)).css('top', this.props.fg.y);
+	},
+	componentDidUpdate: function() {
+		$(React.findDOMNode(this.refs.shot)).css({
+			left: Number(this.props.fg.x) + 337,
+			top: -(this.props.fg.y)
+		});
 	},
 	render: function() {
 		if(this.props.fg.made === "true") {
@@ -336,40 +357,112 @@ var CurrentPlayers = React.createClass({
 });
 
 var BoxScore = React.createClass({
-	resetStats: function() {
-		this.props.onResetStats();
+	var totals = []
+	for (i = 0; i <= 12; i++) {
+		totals.push(0);
+	}
+	// totalMadeFG: null,
+	// totalAttemptedFG: null,
+	// totalMadeThrees: null,
+	// totalAttemptedThrees: null,
+	// totalMadeFT: null,
+	// totalAttemptedFT: null,
+	// totalRebounds: null,
+	// totalAssists: null,
+	// totalSteals: null,
+	// totalBlocks: null,
+	// totalTurnovers: null,
+	// totalFouls: null,
+	// totalPoints: null,
+	updateTotals: function() {
+		var _this = this;
+
+			var str = $('td:nth-child(3)').text();
+			_this.totals[0] += parseInt(str[0]) || 0;
+			_this.totals[1] += parseInt(str[2]) || 0;
+		$('td:nth-child(4)').each(function() {
+			var str = $(this).text();
+			_this.totals[2] += parseInt(str[0]) || 0;
+			_this.totals[3] += parseInt(str[2]) || 0;
+		});
+		$('td:nth-child(5)').each(function() {
+			var str = $(this).text();
+			_this.totals[4] += parseInt(str[0]) || 0;
+			_this.totlas[5] += parseInt(str[2]) || 0;
+		});
+		for (i = 6; i <= 12; i++) {
+			var selector = 'td:nth-child(' + String(i) + ')';
+			$(selector).each(function() {
+				_this.totals[i] += parseInt($(this).text()) || 0;
+			});
+		}
+		// $('td:nth-child(6)').each(function() {
+		// 	_this.totalRebounds += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(7)').each(function() {
+		// 	_this.totalAssists += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(8)').each(function() {
+		// 	_this.totalSteals += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(9)').each(function() {
+		// 	_this.totalBlocks += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(10)').each(function() {
+		// 	_this.totalTurnovers += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(11)').each(function() {
+		// 	_this.totalFouls += parseInt($(this).text()) || 0;
+		// });
+		// $('td:nth-child(12)').each(function() {
+		// 	_this.totalPoints += parseInt($(this).text()) || 0;
+		// });
 	},
 	render: function() {
 		return (
-			<div>
-				<div className="box-score">
-					<table className="box-score-table">
-						<tr className="box-score-header">
-							<th>#</th>
-							<th>Name</th>
-							<th>FG</th>
-							<th>3PT</th>
-							<th>FT</th>
-							<th>REB</th>
-							<th>AST</th>
-							<th>STL</th>
-							<th>BLK</th>
-							<th>TO</th>
-							<th>PF</th>
-							<th>PTS</th>
-						</tr>
-						{this.props.data.map(function(player, index) {
-							return <BoxScoreRow player={player} key={player.number}/>
-						})}
-					</table>
-				</div>
-				<button onClick={this.resetStats}>RESET STATS</button>
+			<div className="box-score">
+				<table className="box-score-table">
+					<tr className="box-score-header">
+						<th>#</th>
+						<th>Name</th>
+						<th>FG</th>
+						<th>3PT</th>
+						<th>FT</th>
+						<th>REB</th>
+						<th>AST</th>
+						<th>STL</th>
+						<th>BLK</th>
+						<th>TO</th>
+						<th>PF</th>
+						<th>PTS</th>
+					</tr>
+					{this.props.data.map(function(player, index) {
+						return <BoxScoreRow player={player} key={player.number} onUpdate={this.updateTotals}/>
+					})}
+					<tr className="box-score-totals">
+						<th></th>
+						<th>TOTAL</th>
+						<th>{this.totalMadeFG}-{this.totalAttemptedFG}</th>
+						<th>{this.totalMadeThrees}-{this.totalAttemptedThrees}</th>
+						<th>{this.totalMadeFT}-{this.totalAttemptedFT}</th>
+						<th>{this.totalRebounds}</th>
+						<th>{this.totalAssists}</th>
+						<th>{this.totalSteals}</th>
+						<th>{this.totalBlocks}</th>
+						<th>{this.totalTurnovers}</th>
+						<th>{this.totalFouls}</th>
+						<th>{this.totalPoints}</th>
+					</tr>
+				</table>
 			</div>
 		);
 	}
 });
 
 var BoxScoreRow = React.createClass({
+	componentDidUpdate: function() {
+		this.props.onUpdate();
+	},
 	render: function() {
 		var player = this.props.player;
 		var attemptedFG = player.attemptedFG.length;
