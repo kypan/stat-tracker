@@ -29,6 +29,12 @@
                 "x": "208",
                 "y": "-461",
                 "made": "false"
+            },
+            {
+                "x": "143",
+                "y": "-154",
+                "made": "true",
+                "assistedBy": "10"
             }
         ],
         "attemptedFT": [],
@@ -58,6 +64,22 @@
                 "y": "-89",
                 "made": "true",
                 "assistedBy": ""
+            },
+            {
+                "x": "113",
+                "y": "-298",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "-118",
+                "y": "-145",
+                "made": "false"
+            },
+            {
+                "x": "-11",
+                "y": "-54",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
@@ -93,6 +115,11 @@
                 "y": "-110",
                 "made": "true",
                 "assistedBy": ""
+            },
+            {
+                "x": "-208",
+                "y": "-128",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
@@ -128,11 +155,27 @@
                 "x": "-114",
                 "y": "-287",
                 "made": "false"
+            },
+            {
+                "x": "138",
+                "y": "-220",
+                "made": "false"
+            },
+            {
+                "x": "-89",
+                "y": "-330",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "244",
+                "y": "-65",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": "0",
+        "assists": 1,
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -152,11 +195,21 @@
                 "x": "113",
                 "y": "-298",
                 "made": "false"
+            },
+            {
+                "x": "175",
+                "y": "-105",
+                "made": "false"
+            },
+            {
+                "x": "-34",
+                "y": "-41",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
         "rebounds": "0",
-        "assists": "0",
+        "assists": 1,
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
@@ -176,6 +229,22 @@
                 "y": "-36",
                 "made": "true",
                 "assistedBy": ""
+            },
+            {
+                "x": "-144",
+                "y": "-116",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-268",
+                "y": "-201",
+                "made": "false"
+            },
+            {
+                "x": "114",
+                "y": "-99",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
@@ -230,6 +299,11 @@
                 "y": "-74",
                 "made": "true",
                 "assistedBy": ""
+            },
+            {
+                "x": "151",
+                "y": "-47",
+                "made": "false"
             }
         ],
         "attemptedFT": [],
@@ -259,6 +333,12 @@
                 "x": "124",
                 "y": "-211",
                 "made": "false"
+            },
+            {
+                "x": "0",
+                "y": "-165",
+                "made": "true",
+                "assistedBy": ""
             }
         ],
         "attemptedFT": [],

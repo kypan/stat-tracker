@@ -35,11 +35,13 @@
 			}
 			.made-shot{
 				position: absolute;
+				z-index: 200;
 				color: #5cb85c;
 				transform: translateX(-50%) translateY(-50%);
 			}
 			.missed-shot{
 				position: absolute;
+				z-index: 200;
 				color: #d9534f;
 				transform: translateX(-50%) translateY(-50%);
 			}
@@ -62,6 +64,7 @@
 			background-color: white;
 		  	position: fixed;
 		  	z-index: 500000;
+		  	transform: translateX(-50%) translateY(-50%);
 		  	border-radius: 5px;
 		  	width: 160px;
 		  	border: 1px solid rgba(0,0,0,0.2);
@@ -69,7 +72,7 @@
 		  	padding: 10px;
 		  	text-align: center;
 		  	#shooter-options, #assister-options {
-		  		margin: 5px 0 10px 0;
+		  		margin: 6px 0 10px 0;
 		  		cursor: pointer !important;
 		  	}
 		  	.made-btn, .done-btn {

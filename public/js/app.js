@@ -153,7 +153,7 @@ var ShotChartMap = React.createClass({
 			});
 		}
 		$('#shot-map-player-filter').change(function() {
-			var number = $('select option:selected').val();
+			var number = $('#shot-map-player-filter option:selected').val();
 			if(number) {
 				this.selectedPlayer = _.find(this.props.data, function(player) {
 															return player.number === number;
@@ -172,10 +172,10 @@ var ShotChartMap = React.createClass({
 		return (
 			<div className="shot-chart-map">
 				{this.state.selectedPlayer ?
-					<ShotMarkerArray player={this.selectedPlayer} /> :
+					<ShotMarkerArray player={this.selectedPlayer} filtered={true} /> :
 					this.props.data.map(function(player) {
 						return (
-							<ShotMarkerArray player={player} key={player.number} />
+							<ShotMarkerArray player={player} key={player.number} filtered={false} />
 						);
 					})
 				}
@@ -195,9 +195,9 @@ var ShotMarkerArray = React.createClass({
 			<div className="shot-marker-array">
 				{this.props.player.attemptedFG.map(function(fg, index) {
 					return (
-						<ShotMarker fg={fg} key={index}/>
+						<ShotMarker player={this.props.player} fg={fg} filtered={this.props.filtered} key={index}/>
 					);
-				})}
+				}.bind(this))}
 			</div>
 		);
 	}
@@ -226,7 +226,12 @@ var ShotMarker = React.createClass({
 			var faClass = "fa fa-times";
 		}
 		return (
-			<div className={markerClass} ref="shot">
+			<div className={markerClass}
+				 	 data-toggle="tooltip"
+				 	 title={(this.props.filtered ? "" : "#" + this.props.player.number + " " + this.props.player.name) +
+				 	 				(!this.props.filtered && this.props.fg.assistedBy ? "\n" : "") +
+							 		(this.props.fg.assistedBy ? "(assist: #" + this.props.fg.assistedBy + ")" : "")}
+					 ref="shot">
 				<i className={faClass}></i>
 			</div>
 		);
@@ -235,7 +240,7 @@ var ShotMarker = React.createClass({
 
 var ShotChartShooterModal = React.createClass({
 	getInitialState: function() {
-		return {showShooterOptions: true};
+		return {showShooterOptions: true, shooterSelected: false};
 	},
 	componentDidMount: function() {
 		$(".shot-chart-modal").css({
@@ -243,25 +248,32 @@ var ShotChartShooterModal = React.createClass({
 			top: this.props.modalY
 		});
 	},
-	handleSelectPlayerFocus: function(e) {
+	handleSelectShooterFocus: function(e) {
 		e.preventDefault();
 		this.setState({showShooterOptions: true});
 		shooterDropdown = document.getElementById("shooter-options");
-		_.forEach(this.props.data, function(player) {
-			shooterDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
-		});
+		if(shooterDropdown.options.length <= 1) {
+			_.forEach(this.props.data, function(player) {
+				shooterDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
+			});
+		}
+		$('#shooter-options').change(function() {
+			var number = $('#shooter-options option:selected').val();
+			if(number)
+				this.setState({shooterSelected: true});
+			else
+				this.setState({shooterSelected: false});
+		}.bind(this));
 	},
 	handleMadeClick: function(e) {
 		e.preventDefault();
 		var shooter = this.refs.shooterSelect.getDOMNode().value;
 		this.props.onShooterSubmit({player: shooter, made: true});
-		this.refs.shooterSelect.getDOMNode().value = '';
 	},
 	handleMissedClick: function(e) {
 		e.preventDefault();
 		var shooter = this.refs.shooterSelect.getDOMNode().value;
 		this.props.onShooterSubmit({player: shooter, made: false});
-		this.refs.shooterSelect.getDOMNode().value = '';
 	},
 	cancelModal: function(e) {
 		e.preventDefault();
@@ -273,11 +285,15 @@ var ShotChartShooterModal = React.createClass({
 				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
 					<span>Who took the shot?</span>
-					<select id="shooter-options" onFocus={this.handleSelectPlayerFocus} ref="shooterSelect">
+					<select id="shooter-options" onFocus={this.handleSelectShooterFocus} ref="shooterSelect">
 						<option value="" disabled selected>Select player...</option>
 					</select>
-					<button className="btn btn-sm btn-success made-btn" onClick={this.handleMadeClick}>MADE</button>
-					<button className="btn btn-sm btn-danger missed-btn" onClick={this.handleMissedClick}>MISSED</button>
+					<button className="btn btn-sm btn-success made-btn"
+									disabled={!this.state.shooterSelected}
+									onClick={this.handleMadeClick}>MADE</button>
+					<button className="btn btn-sm btn-danger missed-btn"
+									disabled={!this.state.shooterSelected}
+									onClick={this.handleMissedClick}>MISSED</button>
 				</div>
 			</div>
 		);
@@ -286,7 +302,7 @@ var ShotChartShooterModal = React.createClass({
 
 var ShotChartAssisterModal = React.createClass({
 	getInitialState: function() {
-		return {showAssisterOptions: false};
+		return {showAssisterOptions: false, assisterSelected: false};
 	},
 	componentDidMount: function() {
 		$(".shot-chart-modal").css({
@@ -302,15 +318,23 @@ var ShotChartAssisterModal = React.createClass({
 			return player.number !== _this.props.shooter;
 		});
 		assisterDropdown = document.getElementById("assister-options");
-		_.forEach(assisterOptions, function(assister) {
-			assisterDropdown.options.add(new Option('#'+assister.number+' '+assister.name, assister.number));
-		});
+		if(assisterDropdown.options.length <= 1) {
+			_.forEach(assisterOptions, function(assister) {
+				assisterDropdown.options.add(new Option('#'+assister.number+' '+assister.name, assister.number));
+			});
+		}
+		$('#assister-options').change(function() {
+			var number = $('#assister-options option:selected').val();
+			if(number)
+				this.setState({assisterSelected: true});
+			else
+				this.setState({assisterSelected: false});
+		}.bind(this));
 	},
 	handleDoneClick: function(e) {
 		e.preventDefault();
 		var assister = this.refs.assisterSelect.getDOMNode().value;
 		this.props.onAssisterSubmit({assister: assister});
-		this.refs.assisterSelect.getDOMNode().value='';
 	},
 	handleNoAssistClick: function(e) {
 		e.preventDefault();
@@ -325,11 +349,13 @@ var ShotChartAssisterModal = React.createClass({
 			<div>
 				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
-					<span>Who Assisted?</span>
+					<span>Who assisted?</span>
 					<select id="assister-options" onFocus={this.handleSelectAssisterFocus} ref="assisterSelect">
 						<option value="" disabled selected>Select player...</option>
 					</select>
-					<button className="btn btn-sm btn-primary done-btn" onClick={this.handleDoneClick}>DONE</button>
+					<button className="btn btn-sm btn-primary done-btn"
+									disabled={!this.state.assisterSelected}
+									onClick={this.handleDoneClick}>DONE</button>
 					<button className="btn btn-sm btn-default no-assist-btn" onClick={this.handleNoAssistClick}>No Assist</button>
 				</div>
 			</div>
