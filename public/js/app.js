@@ -1,3 +1,9 @@
+//React Bootstrap Init
+var DropdownButton = ReactBootstrap.DropdownButton;
+var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+var Tooltip = ReactBootstrap.Tooltip;
+
+
 var Main = React.createClass({
 	loadStatsFromServer: function() {
 		$.ajax({
@@ -75,6 +81,7 @@ var ShotChart = React.createClass({
 	},
 	handleClick: function(e) {
 		e.preventDefault();
+		e.stopPropagation();
 		if(this.state.showShooterModal || this.state.showAssisterModal)
 			return;
 		this.posX = e.pageX - $(".shot-chart").offset().left - 337;
@@ -195,7 +202,11 @@ var ShotMarkerArray = React.createClass({
 			<div className="shot-marker-array">
 				{this.props.player.attemptedFG.map(function(fg, index) {
 					return (
-						<ShotMarker player={this.props.player} fg={fg} filtered={this.props.filtered} key={index}/>
+						<ShotMarker tooltip={this.props.filtered && !fg.assistedBy ? null :
+																(this.props.filtered ? "" : "#" + this.props.player.number + " " + this.props.player.name) +
+																	"\n" + (fg.assistedBy ? "(assist: #" + fg.assistedBy + ")" : "")}
+							 										fg={fg}
+							 										key={index}/>
 					);
 				}.bind(this))}
 			</div>
@@ -225,15 +236,13 @@ var ShotMarker = React.createClass({
 			var markerClass = "missed-shot";
 			var faClass = "fa fa-times";
 		}
+		var tooltip = <Tooltip>{this.props.tooltip}</Tooltip>
 		return (
-			<div className={markerClass}
-				 	 data-toggle="tooltip"
-				 	 title={(this.props.filtered ? "" : "#" + this.props.player.number + " " + this.props.player.name) +
-				 	 				(!this.props.filtered && this.props.fg.assistedBy ? "\n" : "") +
-							 		(this.props.fg.assistedBy ? "(assist: #" + this.props.fg.assistedBy + ")" : "")}
-					 ref="shot">
-				<i className={faClass}></i>
-			</div>
+			<OverlayTrigger placement="top" overlay={this.props.tooltip ? tooltip : null}>
+				<div className={markerClass} ref="shot">
+					<i className={faClass}></i>
+				</div>
+			</OverlayTrigger>
 		);
 	}
 });
