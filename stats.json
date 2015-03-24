@@ -224,6 +224,12 @@
                 "x": "-53",
                 "y": "-96",
                 "made": "false"
+            },
+            {
+                "x": "61",
+                "y": "-74",
+                "made": "true",
+                "assistedBy": ""
             }
         ],
         "attemptedFT": [],

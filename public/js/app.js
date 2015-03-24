@@ -124,13 +124,15 @@ var ShotChart = React.createClass({
 				 <ShotChartShooterModal data={this.props.data}
 				 												modalX={this.modalX}
 				 												modalY={this.modalY}
-				 												onShooterSubmit={this.handleShooterSubmit} /> : null}
+				 												onShooterSubmit={this.handleShooterSubmit}
+				 												onCancelModal={this.reset} /> : null}
 				{this.state.showAssisterModal ?
 				 <ShotChartAssisterModal data={this.props.data}
 				 												 modalX={this.modalX}
 				 												 modalY={this.modalY}
 				 												 shooter={this.player}
-				 												 onAssisterSubmit={this.handleAssisterSubmit} /> : null}
+				 												 onAssisterSubmit={this.handleAssisterSubmit}
+				 												 onCancelModal={this.reset} /> : null}
 			</div>
 		);
 	}
@@ -261,17 +263,21 @@ var ShotChartShooterModal = React.createClass({
 		this.props.onShooterSubmit({player: shooter, made: false});
 		this.refs.shooterSelect.getDOMNode().value = '';
 	},
+	cancelModal: function(e) {
+		e.preventDefault();
+		this.props.onCancelModal();
+	},
 	render: function() {
 		return (
 			<div>
-				<div className="modal-bg modal-bg-clear"></div>
+				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
 					<span>Who took the shot?</span>
 					<select id="shooter-options" onFocus={this.handleSelectPlayerFocus} ref="shooterSelect">
 						<option value="" disabled selected>Select player...</option>
 					</select>
-					<button className="made-btn" onClick={this.handleMadeClick}>MADE</button>
-					<button className="missed-btn" onClick={this.handleMissedClick}>MISSED</button>
+					<button className="btn btn-sm btn-success made-btn" onClick={this.handleMadeClick}>MADE</button>
+					<button className="btn btn-sm btn-danger missed-btn" onClick={this.handleMissedClick}>MISSED</button>
 				</div>
 			</div>
 		);
@@ -310,17 +316,21 @@ var ShotChartAssisterModal = React.createClass({
 		e.preventDefault();
 		this.props.onAssisterSubmit({assister: null});
 	},
+	cancelModal: function(e) {
+		e.preventDefault();
+		this.props.onCancelModal();
+	},
 	render: function() {
 		return (
 			<div>
-				<div className="modal-bg modal-bg-clear"></div>
+				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
 					<span>Who Assisted?</span>
 					<select id="assister-options" onFocus={this.handleSelectAssisterFocus} ref="assisterSelect">
 						<option value="" disabled selected>Select player...</option>
 					</select>
-					<button className="done-btn" onClick={this.handleDoneClick}>DONE</button>
-					<button className="done-btn" onClick={this.handleNoAssistClick}>No Assist</button>
+					<button className="btn btn-sm btn-primary done-btn" onClick={this.handleDoneClick}>DONE</button>
+					<button className="btn btn-sm btn-default no-assist-btn" onClick={this.handleNoAssistClick}>No Assist</button>
 				</div>
 			</div>
 		);

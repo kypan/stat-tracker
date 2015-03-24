@@ -35,12 +35,12 @@
 			}
 			.made-shot{
 				position: absolute;
-				color: green;
+				color: #5cb85c;
 				transform: translateX(-50%) translateY(-50%);
 			}
 			.missed-shot{
 				position: absolute;
-				color: red;
+				color: #d9534f;
 				transform: translateX(-50%) translateY(-50%);
 			}
 		}
@@ -69,7 +69,11 @@
 		  	padding: 10px;
 		  	text-align: center;
 		  	#shooter-options, #assister-options {
-		  		pointer: cursor !important;
+		  		margin: 5px 0 10px 0;
+		  		cursor: pointer !important;
+		  	}
+		  	.made-btn, .done-btn {
+		  		margin-right: 5px;
 		  	}
 		}
 
