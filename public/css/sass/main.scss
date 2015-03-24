@@ -83,12 +83,18 @@
 		margin: 20px 0 0 20px;
 		.box-score-table{
 			border-collapse: collapse;
-			.box-score-header{
-				th{
+			.box-score-header, .box-score-totals{
+				td, th{
 					border: 1px solid;
-					border-bottom: 2px solid;
 					padding: 5px;
 					text-align: center;
+				}
+				th{
+					border-bottom: 2px solid;
+				}
+				td{
+					border-top: 2px solid;
+					font-weight: 700;
 				}
 			}
 			.box-score-row{

@@ -57,7 +57,7 @@ var Main = React.createClass({
 				<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
 				<BoxScore data={this.state.data} />
 				<OtherStats />
-				<button className="btn btn-lg btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">RESET STATS</button>
+				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">RESET STATS</button>
 			</div>
 		);
 	}
@@ -145,16 +145,17 @@ var ShotChartMap = React.createClass({
 		e.preventDefault();
 		e.stopPropagation();
 		playerDropdown = document.getElementById("shot-map-player-filter");
-		_.forEach(this.props.data, function(player) {
-			playerDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
-		});
+		if(playerDropdown.options.length <= 1) {
+			_.forEach(this.props.data, function(player) {
+				playerDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
+			});
+		}
 		$('#shot-map-player-filter').change(function() {
 			var number = $('select option:selected').val();
 			if(number) {
 				this.selectedPlayer = _.find(this.props.data, function(player) {
 															return player.number === number;
 														});
-				console.log(this.selectedPlayer);
 				this.setState({selectedPlayer: true});
 			}
 			else
@@ -356,69 +357,20 @@ var CurrentPlayers = React.createClass({
 	}
 });
 
-var BoxScore = React.createClass({
-	var totals = []
-	for (i = 0; i <= 12; i++) {
-		totals.push(0);
-	}
-	// totalMadeFG: null,
-	// totalAttemptedFG: null,
-	// totalMadeThrees: null,
-	// totalAttemptedThrees: null,
-	// totalMadeFT: null,
-	// totalAttemptedFT: null,
-	// totalRebounds: null,
-	// totalAssists: null,
-	// totalSteals: null,
-	// totalBlocks: null,
-	// totalTurnovers: null,
-	// totalFouls: null,
-	// totalPoints: null,
-	updateTotals: function() {
-		var _this = this;
 
-			var str = $('td:nth-child(3)').text();
-			_this.totals[0] += parseInt(str[0]) || 0;
-			_this.totals[1] += parseInt(str[2]) || 0;
-		$('td:nth-child(4)').each(function() {
-			var str = $(this).text();
-			_this.totals[2] += parseInt(str[0]) || 0;
-			_this.totals[3] += parseInt(str[2]) || 0;
-		});
-		$('td:nth-child(5)').each(function() {
-			var str = $(this).text();
-			_this.totals[4] += parseInt(str[0]) || 0;
-			_this.totlas[5] += parseInt(str[2]) || 0;
-		});
-		for (i = 6; i <= 12; i++) {
-			var selector = 'td:nth-child(' + String(i) + ')';
-			$(selector).each(function() {
-				_this.totals[i] += parseInt($(this).text()) || 0;
-			});
-		}
-		// $('td:nth-child(6)').each(function() {
-		// 	_this.totalRebounds += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(7)').each(function() {
-		// 	_this.totalAssists += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(8)').each(function() {
-		// 	_this.totalSteals += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(9)').each(function() {
-		// 	_this.totalBlocks += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(10)').each(function() {
-		// 	_this.totalTurnovers += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(11)').each(function() {
-		// 	_this.totalFouls += parseInt($(this).text()) || 0;
-		// });
-		// $('td:nth-child(12)').each(function() {
-		// 	_this.totalPoints += parseInt($(this).text()) || 0;
-		// });
+var BoxScore = React.createClass({
+	getInitialState: function() {
+		return {displayTotals: false};
+	},
+	displayTotals: function() {
+		this.setState({displayTotals: true});
+	},
+	updateTotals: function(rowStats, rowIndex) {
+		if(this.refs.boxScoreTotals)
+			this.refs.boxScoreTotals.update(rowStats, rowIndex);
 	},
 	render: function() {
+		var _this = this;
 		return (
 			<div className="box-score">
 				<table className="box-score-table">
@@ -437,22 +389,14 @@ var BoxScore = React.createClass({
 						<th>PTS</th>
 					</tr>
 					{this.props.data.map(function(player, index) {
-						return <BoxScoreRow player={player} key={player.number} onUpdate={this.updateTotals}/>
+						return <BoxScoreRow player={player}
+																key={player.number}
+																rowIndex={index}
+																lastIndex={_this.props.data.length - 1}
+																onRenderAllRows={_this.displayTotals}
+																onBoxScoreRowUpdate={_this.updateTotals} />
 					})}
-					<tr className="box-score-totals">
-						<th></th>
-						<th>TOTAL</th>
-						<th>{this.totalMadeFG}-{this.totalAttemptedFG}</th>
-						<th>{this.totalMadeThrees}-{this.totalAttemptedThrees}</th>
-						<th>{this.totalMadeFT}-{this.totalAttemptedFT}</th>
-						<th>{this.totalRebounds}</th>
-						<th>{this.totalAssists}</th>
-						<th>{this.totalSteals}</th>
-						<th>{this.totalBlocks}</th>
-						<th>{this.totalTurnovers}</th>
-						<th>{this.totalFouls}</th>
-						<th>{this.totalPoints}</th>
-					</tr>
+					{this.state.displayTotals ? <BoxScoreTotals data={this.props.data} ref="boxScoreTotals" /> : null}
 				</table>
 			</div>
 		);
@@ -460,41 +404,137 @@ var BoxScore = React.createClass({
 });
 
 var BoxScoreRow = React.createClass({
+	rowStats: {},
+	componentWillMount: function() {
+		this.rowStats = this.getPlayerBoxScoreStats(this.props.player);
+	},
+	componentDidMount: function() {
+		if(this.props.rowIndex === this.props.lastIndex)
+			this.props.onRenderAllRows();
+		this.props.onBoxScoreRowUpdate(this.rowStats, this.props.rowIndex);
+	},
+	componentWillUpdate: function() {
+		this.rowStats = this.getPlayerBoxScoreStats(this.props.player);
+	},
 	componentDidUpdate: function() {
-		this.props.onUpdate();
+		this.props.onBoxScoreRowUpdate(this.rowStats, this.props.rowIndex);
+	},
+	getPlayerBoxScoreStats: function(player) {
+		var playerStats = {
+			madeFG: 0,
+			attemptedFG: 0,
+			madeThrees: 0,
+			attemptedThrees: 0,
+			madeFT: 0,
+			attemptedFT: 0,
+			rebounds: 0,
+			assists: 0,
+			steals: 0,
+			blocks: 0,
+			turnovers: 0,
+			fouls: 0,
+			points: 0
+		};
+		_.forEach(player.attemptedFG, function(fg) {
+			playerStats.attemptedFG++;
+			if ((Math.pow(Number(fg.x), 2) + Math.pow(Number(fg.y), 2)) > 90000) {
+				playerStats.attemptedThrees++;
+				if(fg.made === "true") {
+					playerStats.madeThrees++;
+					playerStats.madeFG++;
+				}
+			}
+			else {
+				if(fg.made === "true")
+					playerStats.madeFG++;
+			}
+		});
+		_.forEach(player.attemptedFT, function(ft) {
+			playerStats.attemptedFT++;
+			if(ft.made === "true")
+				playerStats.madeFT++;
+		});
+		_.forEach(player, function(n, key) {
+			if(typeof(n) !== "object")
+				playerStats[key] = n;
+		});
+		playerStats.points = (playerStats.madeFG - playerStats.madeThrees) * 2 + playerStats.madeThrees * 3 + playerStats.madeFT;
+		return playerStats;
 	},
 	render: function() {
-		var player = this.props.player;
-		var attemptedFG = player.attemptedFG.length;
-		var madeFG = _.filter(player.attemptedFG, function(fg) {
-			return fg.made === "true";
-		}).length;
-		var attemptedThreesList = _.filter(player.attemptedFG, function(fg) {
-			return (Math.pow(Number(fg.x), 2) + Math.pow(Number(fg.y), 2)) > 90000;
-		})
-		var attemptedThrees = attemptedThreesList.length;
-		var madeThrees = _.filter(attemptedThreesList, function(fg) {
-			return fg.made === "true";
-		}).length;
-		var attemptedFT = player.attemptedFT.length;
-		var madeFT = _.filter(player.attemptedFT, function(ft) {
-			return ft.made === "true";
-		}).length;
-		var points = (madeFG - madeThrees) * 2 + madeThrees * 3 + madeFT;
 		return (
 			<tr className="box-score-row">
-				<td>{player.number}</td>
-				<td>{player.name}</td>
-				<td>{madeFG}-{attemptedFG}</td>
-				<td>{madeThrees}-{attemptedThrees}</td>
-				<td>{madeFT}-{attemptedFT}</td>
-				<td>{player.rebounds}</td>
-				<td>{player.assists}</td>
-				<td>{player.steals}</td>
-				<td>{player.blocks}</td>
-				<td>{player.turnovers}</td>
-				<td>{player.fouls}</td>
-				<td>{points}</td>
+				<td>{this.props.player.number}</td>
+				<td>{this.props.player.name}</td>
+				<td>{this.rowStats.madeFG}-{this.rowStats.attemptedFG}</td>
+				<td>{this.rowStats.madeThrees}-{this.rowStats.attemptedThrees}</td>
+				<td>{this.rowStats.madeFT}-{this.rowStats.attemptedFT}</td>
+				<td>{this.rowStats.rebounds}</td>
+				<td>{this.rowStats.assists}</td>
+				<td>{this.rowStats.steals}</td>
+				<td>{this.rowStats.blocks}</td>
+				<td>{this.rowStats.turnovers}</td>
+				<td>{this.rowStats.fouls}</td>
+				<td>{this.rowStats.points}</td>
+			</tr>
+		);
+	}
+});
+
+var BoxScoreTotals = React.createClass({
+	totals : {
+		madeFG: 0,
+		attemptedFG: 0,
+		madeThrees: 0,
+		attemptedThrees: 0,
+		madeFT: 0,
+		attemptedFT: 0,
+		rebounds: 0,
+		assists: 0,
+		steals: 0,
+		blocks: 0,
+		turnovers: 0,
+		fouls: 0,
+		points: 0
+	},
+	getInitialState: function() {
+		return {totals: this.totals};
+	},
+	update: function(rowStats, rowIndex) {
+		if(rowIndex === 0) {
+			_.forEach(this.totals, function(n, key) {
+				this.totals[key] = 0;
+			}.bind(this));
+		}
+		_.forEach(rowStats, function(n, key) {
+			this.totals[key] += Number(n);
+		}.bind(this));
+		this.setState({totals: this.totals});
+	},
+	getPercentage: function(makes, attempts) {
+		if(attempts === 0)
+			return '----';
+		else
+			return parseFloat(100 * makes/attempts).toFixed(1);
+	},
+	render: function() {
+		return (
+			<tr className="box-score-totals">
+				<td></td>
+				<td>TOTAL</td>
+				<td>{this.totals.madeFG}-{this.totals.attemptedFG}<br/>
+						({this.getPercentage(this.totals.madeFG, this.totals.attemptedFG)}%)</td>
+				<td>{this.totals.madeThrees}-{this.totals.attemptedThrees}<br/>
+						({this.getPercentage(this.totals.madeThrees, this.totals.attemptedThrees)}%)</td>
+				<td>{this.totals.madeFT}-{this.totals.attemptedFT}<br/>
+						({this.getPercentage(this.totals.madeFT, this.totals.attemptedFT)}%)</td>
+				<td>{this.totals.rebounds}</td>
+				<td>{this.totals.assists}</td>
+				<td>{this.totals.steals}</td>
+				<td>{this.totals.blocks}</td>
+				<td>{this.totals.turnovers}</td>
+				<td>{this.totals.fouls}</td>
+				<td>{this.totals.points}</td>
 			</tr>
 		);
 	}
