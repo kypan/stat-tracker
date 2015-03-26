@@ -2,6 +2,7 @@
     {
         "number": "0",
         "name": "KPan",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -14,6 +15,7 @@
     {
         "number": "3",
         "name": "Edmond",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -26,6 +28,7 @@
     {
         "number": "4",
         "name": "David",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -38,6 +41,7 @@
     {
         "number": "5",
         "name": "Christian",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -50,6 +54,7 @@
     {
         "number": "10",
         "name": "Jisu",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -62,6 +67,7 @@
     {
         "number": "11",
         "name": "Austin",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -74,6 +80,7 @@
     {
         "number": "13",
         "name": "Charles",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -86,6 +93,7 @@
     {
         "number": "22",
         "name": "Paul",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -98,6 +106,7 @@
     {
         "number": "23",
         "name": "KSwang",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -110,6 +119,7 @@
     {
         "number": "31",
         "name": "Patrick",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",
@@ -122,6 +132,7 @@
     {
         "number": "66",
         "name": "Bryan",
+        "active": "false",
         "attemptedFG": [],
         "attemptedFT": [],
         "rebounds": "0",

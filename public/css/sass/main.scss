@@ -2,12 +2,12 @@
 	.clock{
 
 	}
-	.current-players{
-
+	#left-column, #right-column {
+		display: inline-block;
+		vertical-align: top;
 	}
 	.shot-chart{
 		position: relative;
-		display: inline-block;
 		width: 674px;
 		margin: 20px 0 0 20px;
 		cursor: crosshair;
@@ -81,12 +81,30 @@
 		}
 
 	}
-	.other-stats{
-
+	.non-shooting-stats-input{
+	  	width: 100%;
+	  	padding: 20px 0 0 20px;
+	  	text-align: center;
+	  	.btn-toolbar{
+	  		position: relative;
+	  		left: 50%;
+	  		transform: translateX(-25%);
+	  		margin-left: 0px;
+	  		.dropdown-menu{
+		  		li{
+		  			font-size: 12px;
+		  		}
+			}
+	  	}
+	}
+	.current-players{
+		margin: 20px 0 0 20px;
+		text-align: center;
+		.current-player-btn {
+			width: 100px;
+		}
 	}
 	.box-score{
-		position: absolute;
-		display: inline-block;
 		margin: 20px 0 0 20px;
 		.box-score-table{
 			border-collapse: collapse;
@@ -106,9 +124,17 @@
 			}
 			.box-score-row{
 				td{
+					position: relative;
 					border: 1px solid;
 					padding: 5px;
 					text-align: center;
+					.activate-player-btn {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						border-radius: 0px;
+					}
 				}
 
 			}
@@ -116,7 +142,7 @@
 	}
 	.reset-btn{
 		position: absolute;
-		top: 20px;
+		bottom: 20px;
 		right: 20px;
 	}
 }

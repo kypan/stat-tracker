@@ -26,6 +26,24 @@ app.put('/stats/reset', function(req, res) {
   });
 });
 
+app.put('/stats/subPlayer', function(req, res) {
+  fs.readFile('stats.json', function(err, data) {
+    var stats = JSON.parse(data);
+    var i = _.findIndex(stats, function(player) {
+      return player.number === req.body.number;
+    });
+    if(stats[i].active === "true")
+      stats[i].active = "false";
+    else
+      stats[i].active = "true";
+    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(JSON.stringify(stats));
+    });
+  });
+});
+
 app.post('/stats/recordShot', function(req, res) {
   fs.readFile('stats.json', function(err, data) {
     var stats = JSON.parse(data);
@@ -37,7 +55,40 @@ app.post('/stats/recordShot', function(req, res) {
       var j = _.findIndex(stats, function(player) {
         return player.number === req.body.assistedBy;
       });
-      stats[j].assists = Number(stats[j].assists) + 1;
+      stats[j].assists = (Number(stats[j].assists) + 1).toString();
+    }
+    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(JSON.stringify(stats));
+    });
+  });
+});
+
+app.post('/stats/recordStat', function(req, res) {
+  fs.readFile('stats.json', function(err, data) {
+    var stats = JSON.parse(data);
+    var i = _.findIndex(stats, function(player) {
+      return player.number === req.body.number;
+    });
+    switch(req.body.stat) {
+      case 'REB':
+        stats[i].rebounds = (Number(stats[i].rebounds) + 1).toString();
+        break;
+      case 'STL':
+        stats[i].steals = (Number(stats[i].steals) + 1).toString();
+        break;
+      case 'BLK':
+        stats[i].blocks = (Number(stats[i].blocks) + 1).toString();
+        break;
+      case 'TO':
+        stats[i].turnovers = (Number(stats[i].turnovers) + 1).toString();
+        break;
+      case 'Foul':
+        stats[i].fouls = (Number(stats[i].fouls) + 1).toString();
+        break;
+      default:
+        break;
     }
     fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');

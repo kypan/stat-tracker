@@ -1,8 +1,12 @@
 //React Bootstrap Init
+var Button = ReactBootstrap.Button;
+var ButtonGroup = ReactBootstrap.ButtonGroup;
+var ButtonToolbar = ReactBootstrap.ButtonToolbar;
 var DropdownButton = ReactBootstrap.DropdownButton;
 var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+var MenuItem = ReactBootstrap.MenuItem;
 var Tooltip = ReactBootstrap.Tooltip;
-
+var ReactBootstrapSelect = ReactBootstrap.Select;
 
 var Main = React.createClass({
 	loadStatsFromServer: function() {
@@ -38,6 +42,34 @@ var Main = React.createClass({
       }.bind(this)
     });
 	},
+	handleRecordStat: function(player, stat) {
+		$.ajax({
+      url: '/stats/recordStat',
+      dataType: 'json',
+      type: 'POST',
+      data: {number: player, stat: stat},
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error('/stats/shot', status, err.toString());
+      }.bind(this)
+    });
+	},
+	handleSubPlayer: function(player) {
+		$.ajax({
+			url: '/stats/subPlayer',
+			dataType: 'json',
+			type: 'PUT',
+			data: {number: player},
+			success: function(data) {
+				this.setState({data: data});
+			}.bind(this),
+      error: function(xhr, status, err) {
+        console.error('/stats/benchPlayer', status, err.toString());
+      }.bind(this)
+		});
+	},
 	handleResetStats: function() {
 		if(window.confirm("Are you sure?")) {
 			$.ajax({
@@ -59,11 +91,25 @@ var Main = React.createClass({
 		return (
 			<div className="main">
 				<Clock />
-				<CurrentPlayers />
-				<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
-				<BoxScore data={this.state.data} />
-				<OtherStats />
+				<div id="left-column">
+					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
+					<NonShootingStatsInput data={this.state.data} onRecordStat={this.handleRecordStat} ref="statsInput" />
+				</div>
+				<div id="right-column">
+					<CurrentPlayers data={this.state.data} onSubPlayer={this.handleSubPlayer} />
+					<BoxScore data={this.state.data} onSubPlayer={this.handleSubPlayer} />
+				</div>
 				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">RESET STATS</button>
+			</div>
+		);
+	}
+});
+
+var Clock = React.createClass({
+	render: function() {
+		return (
+			<div className="clock">
+				Tick tock, tick tock.
 			</div>
 		);
 	}
@@ -81,7 +127,6 @@ var ShotChart = React.createClass({
 	},
 	handleClick: function(e) {
 		e.preventDefault();
-		e.stopPropagation();
 		if(this.state.showShooterModal || this.state.showAssisterModal)
 			return;
 		this.posX = e.pageX - $(".shot-chart").offset().left - 337;
@@ -150,15 +195,9 @@ var ShotChartMap = React.createClass({
 	getInitialState: function() {
 		return {selectedPlayer: false};
 	},
-	handleFilterPlayerFocus: function(e) {
+	handleFilterPlayerClick: function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		playerDropdown = document.getElementById("shot-map-player-filter");
-		if(playerDropdown.options.length <= 1) {
-			_.forEach(this.props.data, function(player) {
-				playerDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
-			});
-		}
 		$('#shot-map-player-filter').change(function() {
 			var number = $('#shot-map-player-filter option:selected').val();
 			if(number) {
@@ -171,10 +210,6 @@ var ShotChartMap = React.createClass({
 				this.setState({selectedPlayer: false});
 		}.bind(this));
 	},
-	handleFilterPlayerClick: function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	},
 	render: function() {
 		return (
 			<div className="shot-chart-map">
@@ -186,13 +221,25 @@ var ShotChartMap = React.createClass({
 						);
 					})
 				}
-				<select id="shot-map-player-filter" onFocus={this.handleFilterPlayerFocus}
-																						onClick={this.handleFilterPlayerClick}
-																						ref="playerFilter">
+				<select id="shot-map-player-filter"
+								onClick={this.handleFilterPlayerClick}
+								ref="playerFilter">
 					<option value="" selected>All</option>
+					{this.props.data.map(function(player, i) {
+							return (
+								<option value={player.number} key={i}>
+									{"#" + player.number + " " + player.name}
+								</option>
+							);
+					}.bind(this))}
 				</select>
 			</div>
 		);
+		// <select id="shot-map-player-filter" onFocus={this.handleFilterPlayerFocus}
+				// 																		onClick={this.handleFilterPlayerClick}
+				// 																		ref="playerFilter">
+				// 	<option value="" selected>All</option>
+				// </select>
 	}
 });
 
@@ -238,9 +285,9 @@ var ShotMarker = React.createClass({
 		}
 		var tooltip = <Tooltip>{this.props.tooltip}</Tooltip>
 		return (
-			<OverlayTrigger placement="top" overlay={this.props.tooltip ? tooltip : null}>
+			<OverlayTrigger placement="top" overlay={this.props.tooltip ? tooltip : <span></span>}>
 				<div className={markerClass} ref="shot">
-					<i className={faClass}></i>
+						<i className={faClass}></i>
 				</div>
 			</OverlayTrigger>
 		);
@@ -263,7 +310,8 @@ var ShotChartShooterModal = React.createClass({
 		shooterDropdown = document.getElementById("shooter-options");
 		if(shooterDropdown.options.length <= 1) {
 			_.forEach(this.props.data, function(player) {
-				shooterDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
+				if(player.active === "true")
+					shooterDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
 			});
 		}
 		$('#shooter-options').change(function() {
@@ -324,7 +372,7 @@ var ShotChartAssisterModal = React.createClass({
 		this.setState({showAssisterOptions: true});
 		var _this = this;
 		var assisterOptions = _.filter(this.props.data, function(player) {
-			return player.number !== _this.props.shooter;
+			return player.active === "true" && (player.number !== _this.props.shooter);
 		});
 		assisterDropdown = document.getElementById("assister-options");
 		if(assisterDropdown.options.length <= 1) {
@@ -372,38 +420,82 @@ var ShotChartAssisterModal = React.createClass({
 	}
 });
 
-var OtherStats = React.createClass({
+var NonShootingStatsInput = React.createClass({
+	recordStat: function(player, stat) {
+		this.props.onRecordStat(player, stat);
+	},
 	render: function() {
+		var statsArray = ['REB', 'STL', 'BLK', 'TO', 'Foul'];
+		var _this = this;
 		return (
-			<div className="other-stats">
-				Enter non-shooting stats here.
-			</div>
-		);
-	}
-});
-
-var Clock = React.createClass({
-	render: function() {
-		return (
-			<div className="clock">
-				Tick tock, tick tock.
+			<div className="non-shooting-stats-input">
+				<ButtonToolbar>
+					{statsArray.map(function(stat, statIndex) {
+						return (
+							<DropdownButton bsStyle="info" title={stat} key={statIndex}>
+								{_this.props.data.map(function(player, i) {
+									if(player.active === "true")
+										return (
+											<MenuItem onClick={_this.recordStat.bind(_this,player.number,stat)} eventKey={i} key={i}>
+												{"#" + player.number + " " + player.name}
+											</MenuItem>
+										);
+								})}
+							</DropdownButton>
+						);
+					})}
+				</ButtonToolbar>
 			</div>
 		);
 	}
 });
 
 var CurrentPlayers = React.createClass({
+	activePlayers: [],
+	indexRemoved: null,
+	getInitialState: function() {
+		return {activeRoster: [], hover: null};
+	},
+	// componentDidUpdate: function() {
+	// 	React.findDOMNode(this.refs.)
+	// },
+	handleMouseEnter: function(index) {
+		this.setState({hover: index});
+	},
+	handleMouseLeave: function() {
+		this.setState({hover: null});
+	},
+	benchPlayer: function(player, index) {
+		this.props.onSubPlayer(player);
+		this.indexRemoved = index;
+	},
 	render: function() {
+		this.activePlayers = _.filter(this.props.data, function(player) {
+			return player.active === "true";
+		});
 		return (
 			<div className="current-players">
-				These 5 are on the floor.
+				<ButtonGroup className="player-list" ref="playerList">
+					{this.activePlayers.map(function(player, index) {
+						return (<Button className="current-player-btn"
+														bsStyle={this.state.hover === index ? "warning" : "default"}
+														onMouseEnter={this.handleMouseEnter.bind(this,index)}
+														onMouseLeave={this.handleMouseLeave}
+														onClick={this.benchPlayer.bind(this,player.number,index)}
+														ref={index}
+														key={index}>
+											{this.state.hover === index ?
+												"BENCH" : "#" + player.number + " " + player.name}
+										</Button>);
+					}.bind(this))}
+				</ButtonGroup>
 			</div>
 		);
 	}
 });
 
-
 var BoxScore = React.createClass({
+	previousRowStats: {},
 	getInitialState: function() {
 		return {displayTotals: false};
 	},
@@ -411,8 +503,13 @@ var BoxScore = React.createClass({
 		this.setState({displayTotals: true});
 	},
 	updateTotals: function(rowStats, rowIndex) {
-		if(this.refs.boxScoreTotals)
+		if(!_.isEqual(rowStats,this.previousRowStats) && this.refs.boxScoreTotals) {
+			this.previousRowStats = rowStats;
 			this.refs.boxScoreTotals.update(rowStats, rowIndex);
+		}
+	},
+	activatePlayer: function(player) {
+		this.props.onSubPlayer(player);
 	},
 	render: function() {
 		var _this = this;
@@ -439,7 +536,8 @@ var BoxScore = React.createClass({
 																rowIndex={index}
 																lastIndex={_this.props.data.length - 1}
 																onRenderAllRows={_this.displayTotals}
-																onBoxScoreRowUpdate={_this.updateTotals} />
+																onBoxScoreRowUpdate={_this.updateTotals}
+																onActivatePlayer={_this.activatePlayer} />
 					})}
 					{this.state.displayTotals ? <BoxScoreTotals data={this.props.data} ref="boxScoreTotals" /> : null}
 				</table>
@@ -450,6 +548,9 @@ var BoxScore = React.createClass({
 
 var BoxScoreRow = React.createClass({
 	rowStats: {},
+	getInitialState: function() {
+		return {hover: false};
+	},
 	componentWillMount: function() {
 		this.rowStats = this.getPlayerBoxScoreStats(this.props.player);
 	},
@@ -463,6 +564,15 @@ var BoxScoreRow = React.createClass({
 	},
 	componentDidUpdate: function() {
 		this.props.onBoxScoreRowUpdate(this.rowStats, this.props.rowIndex);
+	},
+	handleMouseEnter: function() {
+		this.setState({hover: true});
+	},
+	handleMouseLeave: function() {
+		this.setState({hover: false});
+	},
+	activatePlayer: function(player) {
+		this.props.onActivatePlayer(player);
 	},
 	getPlayerBoxScoreStats: function(player) {
 		var playerStats = {
@@ -510,7 +620,14 @@ var BoxScoreRow = React.createClass({
 		return (
 			<tr className="box-score-row">
 				<td>{this.props.player.number}</td>
-				<td>{this.props.player.name}</td>
+				<td onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+					{this.props.player.name}
+					{this.state.hover && this.props.player.active !== "true" ?
+						<Button className="activate-player-btn"
+						bsStyle="success"
+						bsSize="small"
+						onClick={this.activatePlayer.bind(this,this.props.player.number)}>
+						PLAY</Button> : null}</td>
 				<td>{this.rowStats.madeFG}-{this.rowStats.attemptedFG}</td>
 				<td>{this.rowStats.madeThrees}-{this.rowStats.attemptedThrees}</td>
 				<td>{this.rowStats.madeFT}-{this.rowStats.attemptedFT}</td>
