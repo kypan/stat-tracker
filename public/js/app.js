@@ -66,7 +66,7 @@ var Main = React.createClass({
 				this.setState({data: data});
 			}.bind(this),
       error: function(xhr, status, err) {
-        console.error('/stats/benchPlayer', status, err.toString());
+        console.error('/stats/subPlayer', status, err.toString());
       }.bind(this)
 		});
 	},
@@ -90,27 +90,35 @@ var Main = React.createClass({
 	render: function() {
 		return (
 			<div className="main">
-				<Clock />
 				<div id="left-column">
-					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
-					<NonShootingStatsInput data={this.state.data} onRecordStat={this.handleRecordStat} ref="statsInput" />
-				</div>
-				<div id="right-column">
+					<div id="logo"><img src="/img/logo.png"/></div>
 					<CurrentPlayers data={this.state.data} onSubPlayer={this.handleSubPlayer} />
 					<BoxScore data={this.state.data} onSubPlayer={this.handleSubPlayer} />
 				</div>
-				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">RESET STATS</button>
+				<div id="right-column">
+					<Clock />
+					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
+					<NonShootingStatsInput data={this.state.data} onRecordStat={this.handleRecordStat} ref="statsInput" />
+				</div>
+				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">
+					<i className="fa fa-fw fa-refresh"></i> RESET STATS
+				</button>
 			</div>
 		);
 	}
 });
 
 var Clock = React.createClass({
+	componentDidMount: function() {
+		var clock = $('.clock').FlipClock(1200, {
+			autoStart: false,
+			countdown: true,
+			clockFace: 'MinuteCounter',
+		});
+	},
 	render: function() {
 		return (
-			<div className="clock">
-				Tick tock, tick tock.
-			</div>
+			<div className="clock"></div>
 		);
 	}
 });
@@ -135,6 +143,10 @@ var ShotChart = React.createClass({
 		this.modalY = e.pageY;
 		this.setState({showShooterModal: true});
 	},
+	handleFreeThrowClick: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	},
 	handleShooterSubmit: function(data) {
 		if(!data.made) {
 			this.props.onRecordShot({number: data.player, x: this.posX, y: this.posY, made: data.made});
@@ -149,6 +161,9 @@ var ShotChart = React.createClass({
 	handleAssisterSubmit: function(data) {
 		this.props.onRecordShot({number: this.player, x: this.posX, y: this.posY, made: this.made, assistedBy: data.assister});
 		this.reset();
+	},
+	handleRecordFT: function(data) {
+
 	},
 	toggleShotMap: function(e) {
 		e.preventDefault();
@@ -168,23 +183,76 @@ var ShotChart = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className="shot-chart" onClick={this.handleClick}>
-				<img src="/img/shot_chart.png" />
-				<button className="btn btn-sm btn-primary toggle-btn" onClick={this.toggleShotMap} ref="toggleButton">Toggle Shot Map</button>
-				{this.state.showShotMap ? <ShotChartMap data={this.props.data} /> : null}
-				{this.state.showShooterModal ?
-				 <ShotChartShooterModal data={this.props.data}
-				 												modalX={this.modalX}
-				 												modalY={this.modalY}
-				 												onShooterSubmit={this.handleShooterSubmit}
-				 												onCancelModal={this.reset} /> : null}
-				{this.state.showAssisterModal ?
-				 <ShotChartAssisterModal data={this.props.data}
-				 												 modalX={this.modalX}
-				 												 modalY={this.modalY}
-				 												 shooter={this.player}
-				 												 onAssisterSubmit={this.handleAssisterSubmit}
-				 												 onCancelModal={this.reset} /> : null}
+			<div className="shot-chart-container">
+				<div className="shot-chart-title">SHOT CHART</div>
+				<div className="shot-chart" onClick={this.handleClick}>
+					<img src="/img/shot_chart.png" />
+					<FreeThrowInput data={this.props.data} onClick={this.handleFreeThrowClick} onRecordFT={this.handleRecordFT} ref="ftInput" />
+					<button className="btn btn-sm btn-info toggle-btn" onClick={this.toggleShotMap} ref="toggleButton">
+						<i className="fa fa-fw fa-bullseye"></i> Toggle Shot Map
+					</button>
+					{this.state.showShotMap ? <ShotChartMap data={this.props.data} /> : null}
+					{this.state.showShooterModal ?
+					 <ShotChartShooterModal data={this.props.data}
+					 												modalX={this.modalX}
+					 												modalY={this.modalY}
+					 												onShooterSubmit={this.handleShooterSubmit}
+					 												onCancelModal={this.reset} /> : null}
+					{this.state.showAssisterModal ?
+					 <ShotChartAssisterModal data={this.props.data}
+					 												 modalX={this.modalX}
+					 												 modalY={this.modalY}
+					 												 shooter={this.player}
+					 												 onAssisterSubmit={this.handleAssisterSubmit}
+					 												 onCancelModal={this.reset} /> : null}
+				</div>
+			</div>
+		);
+	}
+});
+
+var FreeThrowInput = React.createClass({
+	getInitialState: function() {
+		return {playerSelected: null};
+	},
+	handleSelectPlayer: function(player) {
+		this.setState({playerSelected: player});
+	},
+	handleMadeClick: function(player) {
+		e.preventDefault();
+		e.stopPropagation();
+		//this.props.onRecordFT(player);
+	},
+	handleMissedClick: function(player) {
+		e.preventDefault();
+		e.stopPropagation();
+	},
+	render: function() {
+		return (
+			<div className="free-throw-input">
+				<DropdownButton bsStyle="primary" title="Free Throw" dropup>
+					{this.props.data.map(function(player, i) {
+						if(player.active === "true")
+							return (
+								<MenuItem onClick={this.handleSelectPlayer.bind(this,player.number)} eventKey={i} key={i}>
+									{this.state.playerSelected === player.number ?
+										<div>
+											<Button bsStyle="success"
+															bsSize="xsmall"
+															onClick={this.handleMadeClick}>
+												<i className="fa fa-fw fa-circle"></i> MADE
+											</Button>
+											<Button bsStyle="danger"
+															bsSize="xsmall"
+															onClick={this.handleMissedClick}>
+												<i className="fa fa-fw fa-times"></i> MISSED
+											</Button>
+										</div> :
+										"#" + player.number + " " + player.name}
+								</MenuItem>
+							);
+					}.bind(this))}
+				</DropdownButton>
 			</div>
 		);
 	}
@@ -235,11 +303,6 @@ var ShotChartMap = React.createClass({
 				</select>
 			</div>
 		);
-		// <select id="shot-map-player-filter" onFocus={this.handleFilterPlayerFocus}
-				// 																		onClick={this.handleFilterPlayerClick}
-				// 																		ref="playerFilter">
-				// 	<option value="" selected>All</option>
-				// </select>
 	}
 });
 
@@ -296,7 +359,7 @@ var ShotMarker = React.createClass({
 
 var ShotChartShooterModal = React.createClass({
 	getInitialState: function() {
-		return {showShooterOptions: true, shooterSelected: false};
+		return {shooterSelected: false};
 	},
 	componentDidMount: function() {
 		$(".shot-chart-modal").css({
@@ -304,16 +367,8 @@ var ShotChartShooterModal = React.createClass({
 			top: this.props.modalY
 		});
 	},
-	handleSelectShooterFocus: function(e) {
+	handleSelectShooter: function(e) {
 		e.preventDefault();
-		this.setState({showShooterOptions: true});
-		shooterDropdown = document.getElementById("shooter-options");
-		if(shooterDropdown.options.length <= 1) {
-			_.forEach(this.props.data, function(player) {
-				if(player.active === "true")
-					shooterDropdown.options.add(new Option('#'+player.number+' '+player.name, player.number));
-			});
-		}
 		$('#shooter-options').change(function() {
 			var number = $('#shooter-options option:selected').val();
 			if(number)
@@ -342,15 +397,29 @@ var ShotChartShooterModal = React.createClass({
 				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
 					<span>Who took the shot?</span>
-					<select id="shooter-options" onFocus={this.handleSelectShooterFocus} ref="shooterSelect">
+					<select id="shooter-options"
+									onClick={this.handleSelectShooter}
+									ref="shooterSelect">
 						<option value="" disabled selected>Select player...</option>
+						{this.props.data.map(function(player, i) {
+								if(player.active === "true")
+									return (
+										<option value={player.number} key={i}>
+											{"#" + player.number + " " + player.name}
+										</option>
+									);
+						}.bind(this))}
 					</select>
 					<button className="btn btn-sm btn-success made-btn"
 									disabled={!this.state.shooterSelected}
-									onClick={this.handleMadeClick}>MADE</button>
+									onClick={this.handleMadeClick}>
+						<i className="fa fa-fw fa-circle"></i> MADE
+					</button>
 					<button className="btn btn-sm btn-danger missed-btn"
 									disabled={!this.state.shooterSelected}
-									onClick={this.handleMissedClick}>MISSED</button>
+									onClick={this.handleMissedClick}>
+						<i className="fa fa-fw fa-times"></i> MISSED
+					</button>
 				</div>
 			</div>
 		);
@@ -359,7 +428,7 @@ var ShotChartShooterModal = React.createClass({
 
 var ShotChartAssisterModal = React.createClass({
 	getInitialState: function() {
-		return {showAssisterOptions: false, assisterSelected: false};
+		return {assisterSelected: false};
 	},
 	componentDidMount: function() {
 		$(".shot-chart-modal").css({
@@ -367,19 +436,8 @@ var ShotChartAssisterModal = React.createClass({
 			top: this.props.modalY
 		});
 	},
-	handleSelectAssisterFocus: function(e) {
+	handleSelectAssister: function(e) {
 		e.preventDefault();
-		this.setState({showAssisterOptions: true});
-		var _this = this;
-		var assisterOptions = _.filter(this.props.data, function(player) {
-			return player.active === "true" && (player.number !== _this.props.shooter);
-		});
-		assisterDropdown = document.getElementById("assister-options");
-		if(assisterDropdown.options.length <= 1) {
-			_.forEach(assisterOptions, function(assister) {
-				assisterDropdown.options.add(new Option('#'+assister.number+' '+assister.name, assister.number));
-			});
-		}
 		$('#assister-options').change(function() {
 			var number = $('#assister-options option:selected').val();
 			if(number)
@@ -407,13 +465,27 @@ var ShotChartAssisterModal = React.createClass({
 				<div className="modal-bg modal-bg-clear" onClick={this.cancelModal}></div>
 				<div className="shot-chart-modal">
 					<span>Who assisted?</span>
-					<select id="assister-options" onFocus={this.handleSelectAssisterFocus} ref="assisterSelect">
+					<select id="assister-options"
+									onClick={this.handleSelectAssister}
+									ref="assisterSelect">
 						<option value="" disabled selected>Select player...</option>
+						{this.props.data.map(function(player, i) {
+								if(player.active === "true" && player.number !== this.props.shooter)
+									return (
+										<option value={player.number} key={i}>
+											{"#" + player.number + " " + player.name}
+										</option>
+									);
+						}.bind(this))}
 					</select>
 					<button className="btn btn-sm btn-primary done-btn"
 									disabled={!this.state.assisterSelected}
-									onClick={this.handleDoneClick}>DONE</button>
-					<button className="btn btn-sm btn-default no-assist-btn" onClick={this.handleNoAssistClick}>No Assist</button>
+									onClick={this.handleDoneClick}>
+						<i className="fa fa-fw fa-check"></i> DONE
+					</button>
+					<button className="btn btn-sm btn-default no-assist-btn" onClick={this.handleNoAssistClick}>
+						<i className="fa fa-fw fa-times"></i> No Assist
+					</button>
 				</div>
 			</div>
 		);
@@ -423,16 +495,18 @@ var ShotChartAssisterModal = React.createClass({
 var NonShootingStatsInput = React.createClass({
 	recordStat: function(player, stat) {
 		this.props.onRecordStat(player, stat);
+		$('.dropdown-toggle').blur();
 	},
 	render: function() {
 		var statsArray = ['REB', 'STL', 'BLK', 'TO', 'Foul'];
 		var _this = this;
 		return (
 			<div className="non-shooting-stats-input">
+				<div className="stats-title">NON-SHOOTING STATS</div>
 				<ButtonToolbar>
 					{statsArray.map(function(stat, statIndex) {
 						return (
-							<DropdownButton bsStyle="info" title={stat} key={statIndex}>
+							<DropdownButton bsStyle="primary" title={stat} key={statIndex}>
 								{_this.props.data.map(function(player, i) {
 									if(player.active === "true")
 										return (
@@ -452,22 +526,41 @@ var NonShootingStatsInput = React.createClass({
 
 var CurrentPlayers = React.createClass({
 	activePlayers: [],
-	indexRemoved: null,
 	getInitialState: function() {
 		return {activeRoster: [], hover: null};
 	},
-	// componentDidUpdate: function() {
-	// 	React.findDOMNode(this.refs.)
-	// },
+	componentDidUpdate: function() {
+		$('.current-player-btn').blur();
+		if(this.activePlayers.length !== 5) {
+			$('.current-player-btn').css({
+				'border-color': '#d9534f',
+				'color': '#d9534f'
+			});
+			$('.current-players-title').css('color', '#d9534f');
+		}
+		else {
+			$('.current-player-btn').css({
+				'border-color': '#ccc',
+				'color': '#000'
+			});
+			$('.current-players-title').css('color', '#000');
+		}
+		if(this.state.hover !== null) {
+			var selector = '#current-player-' + this.state.hover;
+			$(selector).css({
+				'border-color': '#eea236',
+				'color': '#fff'
+			});
+		}
+	},
 	handleMouseEnter: function(index) {
 		this.setState({hover: index});
 	},
 	handleMouseLeave: function() {
 		this.setState({hover: null});
 	},
-	benchPlayer: function(player, index) {
+	benchPlayer: function(player) {
 		this.props.onSubPlayer(player);
-		this.indexRemoved = index;
 	},
 	render: function() {
 		this.activePlayers = _.filter(this.props.data, function(player) {
@@ -475,17 +568,20 @@ var CurrentPlayers = React.createClass({
 		});
 		return (
 			<div className="current-players">
+				<div className="current-players-title">CURRENT FIVE</div>
 				<ButtonGroup className="player-list" ref="playerList">
+					{!this.activePlayers.length ? <div>No players on the court.</div> : null}
 					{this.activePlayers.map(function(player, index) {
 						return (<Button className="current-player-btn"
+														id={"current-player-" + index}
 														bsStyle={this.state.hover === index ? "warning" : "default"}
 														onMouseEnter={this.handleMouseEnter.bind(this,index)}
 														onMouseLeave={this.handleMouseLeave}
-														onClick={this.benchPlayer.bind(this,player.number,index)}
-														ref={index}
+														onClick={this.benchPlayer.bind(this,player.number)}
 														key={index}>
 											{this.state.hover === index ?
-												"BENCH" : "#" + player.number + " " + player.name}
+												<span><i className="fa fa-fw fa-user-times"></i> Bench</span>  : 
+												"#" + player.number + " " + player.name}
 										</Button>);
 					}.bind(this))}
 				</ButtonGroup>
@@ -515,6 +611,7 @@ var BoxScore = React.createClass({
 		var _this = this;
 		return (
 			<div className="box-score">
+				<div className="box-score-title">BOX SCORE</div>
 				<table className="box-score-table">
 					<tr className="box-score-header">
 						<th>#</th>
@@ -627,7 +724,7 @@ var BoxScoreRow = React.createClass({
 						bsStyle="success"
 						bsSize="small"
 						onClick={this.activatePlayer.bind(this,this.props.player.number)}>
-						PLAY</Button> : null}</td>
+						<i className="fa fa-fw fa-user-plus"></i> Play</Button> : null}</td>
 				<td>{this.rowStats.madeFG}-{this.rowStats.attemptedFG}</td>
 				<td>{this.rowStats.madeThrees}-{this.rowStats.attemptedThrees}</td>
 				<td>{this.rowStats.madeFT}-{this.rowStats.attemptedFT}</td>

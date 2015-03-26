@@ -1,138 +1,78 @@
 #stat-tracker{
-	.clock{
-
-	}
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
 	#left-column, #right-column {
 		display: inline-block;
 		vertical-align: top;
+		margin-top: 20px;
+		margin-bottom: 20px;
 	}
-	.shot-chart{
-		position: relative;
-		width: 674px;
-		margin: 20px 0 0 20px;
-		cursor: crosshair;
-		.toggle-btn{
-			position: absolute;
-			z-index: 1000;
-			right: 10px;
-			bottom: 10px;
-			cursor: pointer !important;
-		}
-		.shot-chart-map{
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: none;
-			#shot-map-player-filter {
-				position: absolute;
-				z-index: 1000;
-				right: 134px;
-				bottom: 14px;
-				width: 125px;
-				cursor: pointer !important;
-			}
-			.made-shot{
-				position: absolute;
-				z-index: 200;
-				color: #5cb85c;
-				transform: translateX(-50%) translateY(-50%);
-			}
-			.missed-shot{
-				position: absolute;
-				z-index: 200;
-				color: #d9534f;
-				transform: translateX(-50%) translateY(-50%);
-			}
-		}
-		.modal-bg{
-			position: fixed;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			background-color: rgba(0,0,0,0.5);
-			z-index: 1;
-		}
-
-		.modal-bg.modal-bg-clear {
-			background: none;
-		}
-
-		.shot-chart-modal {
-			background-color: white;
-		  	position: fixed;
-		  	z-index: 500000;
-		  	transform: translateX(-50%) translateY(-47%);
-		  	border-radius: 5px;
-		  	width: 160px;
-		  	border: 1px solid rgba(0,0,0,0.2);
-		  	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-		  	padding: 10px;
-		  	text-align: center;
-		  	#shooter-options, #assister-options {
-		  		margin: 6px 0 10px 0;
-		  		cursor: pointer !important;
-		  	}
-		  	.made-btn, .done-btn {
-		  		margin-right: 5px;
-		  	}
-		}
-
+	#left-column {
+		margin-left: 20px;
+		margin-right: 40px;
 	}
-	.non-shooting-stats-input{
-	  	width: 100%;
-	  	padding: 20px 0 0 20px;
-	  	text-align: center;
-	  	.btn-toolbar{
-	  		position: relative;
-	  		left: 50%;
-	  		transform: translateX(-25%);
-	  		margin-left: 0px;
-	  		.dropdown-menu{
-		  		li{
-		  			font-size: 12px;
-		  		}
-			}
-	  	}
+	#right-column {
+		margin-left: 40px;
+		margin-right: 20px;
+	}
+	#logo{
+		padding: 20px 20px 40px 20px;
+		img {
+			height: 100px;
+		}
 	}
 	.current-players{
-		margin: 20px 0 0 20px;
 		text-align: center;
+		.current-players-title{
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
 		.current-player-btn {
 			width: 100px;
+			font-weight: 500;
 		}
 	}
 	.box-score{
-		margin: 20px 0 0 20px;
+		margin-top: 40px;
+		.box-score-title{
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
 		.box-score-table{
 			border-collapse: collapse;
 			.box-score-header, .box-score-totals{
 				td, th{
-					border: 1px solid;
+					border: 1px solid #ccc;
 					padding: 5px;
 					text-align: center;
 				}
 				th{
-					border-bottom: 2px solid;
+					border-bottom: 2px solid #ccc;
 				}
 				td{
-					border-top: 2px solid;
+					border-top: 2px solid #ccc;
 					font-weight: 700;
 				}
 			}
 			.box-score-row{
 				td{
 					position: relative;
-					border: 1px solid;
+					border: 1px solid #ccc;
 					padding: 5px;
 					text-align: center;
 					.activate-player-btn {
 						position: absolute;
 						top: 0;
-						left: 0;
-						width: 100%;
+						right: 0;
+						left: -27px;
+						width: 94px;
+						height: 100%;
 						border-radius: 0px;
 					}
 				}
@@ -140,9 +80,124 @@
 			}
 		}
 	}
+	.clock{
+		zoom: 0.4;
+		-moz-transform: scale(0.4);
+	}
+	.shot-chart-container {
+		.shot-chart-title {
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+		.shot-chart{
+			position: relative;
+			width: 674px;
+			cursor: crosshair;
+			.toggle-btn{
+				position: absolute;
+				z-index: 1000;
+				right: 10px;
+				bottom: 10px;
+				cursor: pointer !important;
+			}
+			.free-throw-input{
+				position: absolute;
+				z-index: 1000;
+				left: 10px;
+				bottom: 10px;
+				cursor: pointer !important;
+			}
+			.shot-chart-map{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: none;
+				#shot-map-player-filter {
+					position: absolute;
+					z-index: 1000;
+					right: 150px;
+					bottom: 14px;
+					width: 125px;
+					cursor: pointer !important;
+				}
+				.made-shot{
+					position: absolute;
+					z-index: 200;
+					color: #5cb85c;
+					transform: translateX(-50%) translateY(-50%);
+				}
+				.missed-shot{
+					position: absolute;
+					z-index: 200;
+					color: #d9534f;
+					transform: translateX(-50%) translateY(-50%);
+				}
+			}
+			.modal-bg{
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				background-color: rgba(0,0,0,0.5);
+				z-index: 1;
+			}
+
+			.modal-bg.modal-bg-clear {
+				background: none;
+			}
+
+			.shot-chart-modal {
+				background-color: white;
+			  	position: fixed;
+			  	z-index: 500000;
+			  	transform: translateX(-50%) translateY(-47%);
+			  	border-radius: 5px;
+			  	width: 200px;
+			  	border: 1px solid rgba(0,0,0,0.2);
+			  	box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+			  	padding: 10px;
+			  	text-align: center;
+			  	#shooter-options, #assister-options {
+			  		margin: 6px 0 10px 0;
+			  		cursor: pointer !important;
+			  	}
+			  	.made-btn, .done-btn {
+			  		margin-right: 5px;
+			  	}
+			}
+
+		}
+	}
+	.non-shooting-stats-input{
+		.stats-title {
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+	  	width: 100%;
+	  	padding-top: 20px;
+	  	text-align: center;
+	  	.btn-toolbar{
+	  		position: relative;
+	  		left: 50%;
+	  		transform: translateX(-25%);
+	  		margin-left: 0px;
+	  		.dropdown-menu{
+	  			left: 50%;
+  				transform: translateX(-50%);
+		  		li{
+		  			font-size: 12px;
+		  		}
+			}
+	  	}
+	}
 	.reset-btn{
 		position: absolute;
-		bottom: 20px;
+		top: 20px;
 		right: 20px;
 	}
 }
