@@ -30,17 +30,31 @@ var Main = React.createClass({
 	},
 	handleRecordShot: function(FGAttempt) {
 		$.ajax({
-      url: '/stats/recordShot',
-      dataType: 'json',
-      type: 'POST',
-      data: FGAttempt,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error('/stats/shot', status, err.toString());
-      }.bind(this)
-    });
+		  url: '/stats/recordShot',
+		  dataType: 'json',
+		  type: 'POST',
+		  data: FGAttempt,
+		  success: function(data) {
+		    this.setState({data: data});
+		  }.bind(this),
+		  error: function(xhr, status, err) {
+		    console.error('/stats/recordShot', status, err.toString());
+		  }.bind(this)
+		});
+	},
+	handleRecordFT: function(data) {
+		$.ajax({
+		  url: '/stats/recordFT',
+		  dataType: 'json',
+		  type: 'POST',
+		  data: data,
+		  success: function(data) {
+		    this.setState({data: data});
+		  }.bind(this),
+		  error: function(xhr, status, err) {
+		    console.error('/stats/recordFT', status, err.toString());
+		  }.bind(this)
+		});
 	},
 	handleRecordStat: function(player, stat) {
 		$.ajax({
@@ -52,7 +66,7 @@ var Main = React.createClass({
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error('/stats/shot', status, err.toString());
+        console.error('/stats/recordStat', status, err.toString());
       }.bind(this)
     });
 	},
@@ -96,32 +110,47 @@ var Main = React.createClass({
 					<BoxScore data={this.state.data} onSubPlayer={this.handleSubPlayer} />
 				</div>
 				<div id="right-column">
-					<Clock />
-					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} ref="shotChart"/>
+					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} onRecordFT={this.handleRecordFT} ref="shotChart"/>
 					<NonShootingStatsInput data={this.state.data} onRecordStat={this.handleRecordStat} ref="statsInput" />
 				</div>
 				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">
 					<i className="fa fa-fw fa-refresh"></i> RESET STATS
 				</button>
 			</div>
-		);
+		); //<Clock />
 	}
 });
 
-var Clock = React.createClass({
-	componentDidMount: function() {
-		var clock = $('.clock').FlipClock(1200, {
-			autoStart: false,
-			countdown: true,
-			clockFace: 'MinuteCounter',
-		});
-	},
-	render: function() {
-		return (
-			<div className="clock"></div>
-		);
-	}
-});
+// var Clock = React.createClass({
+// 	clock: null,
+// 	componentDidMount: function() {
+// 	},
+// 	startClock: function() {
+// 		this.clock.start();
+// 	},
+// 	stopClock: function() {
+// 		this.clock.stop();
+// 	},
+// 	resetClock: function() {
+// 		this.clock.setTime(1200);
+// 	},
+// 	render: function() {
+// 		return (
+// 			<div className="clock-container">
+// 				<Button bsStyle="success" bsSize="xsmall" onClick={this.startClock}>
+// 					<i className="fa fa-fw fa-play"></i>
+// 				</Button>
+// 				<Button bsStyle="warning" bsSize="xsmall" onClick={this.stopClock}>
+// 					<i className="fa fa-fw fa-pause"></i>
+// 				</Button>
+// 				<Button bsStyle="danger" bsSize="xsmall" onClick={this.resetClock}>
+// 					<i className="fa fa-fw fa-refresh"></i>
+// 				</Button>
+// 				<div className="clock"></div>
+// 			</div>
+// 		);
+// 	}
+// });
 
 var ShotChart = React.createClass({
 	player: null,
@@ -143,10 +172,6 @@ var ShotChart = React.createClass({
 		this.modalY = e.pageY;
 		this.setState({showShooterModal: true});
 	},
-	handleFreeThrowClick: function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	},
 	handleShooterSubmit: function(data) {
 		if(!data.made) {
 			this.props.onRecordShot({number: data.player, x: this.posX, y: this.posY, made: data.made});
@@ -163,7 +188,7 @@ var ShotChart = React.createClass({
 		this.reset();
 	},
 	handleRecordFT: function(data) {
-
+		this.props.onRecordFT(data);
 	},
 	toggleShotMap: function(e) {
 		e.preventDefault();
@@ -187,7 +212,7 @@ var ShotChart = React.createClass({
 				<div className="shot-chart-title">SHOT CHART</div>
 				<div className="shot-chart" onClick={this.handleClick}>
 					<img src="/img/shot_chart.png" />
-					<FreeThrowInput data={this.props.data} onClick={this.handleFreeThrowClick} onRecordFT={this.handleRecordFT} ref="ftInput" />
+					<FreeThrowInput data={this.props.data} onRecordFT={this.handleRecordFT} ref="ftInput" />
 					<button className="btn btn-sm btn-info toggle-btn" onClick={this.toggleShotMap} ref="toggleButton">
 						<i className="fa fa-fw fa-bullseye"></i> Toggle Shot Map
 					</button>
@@ -215,37 +240,51 @@ var FreeThrowInput = React.createClass({
 	getInitialState: function() {
 		return {playerSelected: null};
 	},
+	toggleFreeThrow: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		if(this.state.playerSelected)
+			this.setState({playerSelected: null});
+	},
 	handleSelectPlayer: function(player) {
 		this.setState({playerSelected: player});
+		$('.dropdown-menu li a').css('outline', 'none');
 	},
-	handleMadeClick: function(player) {
+	handleMadeClick: function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		//this.props.onRecordFT(player);
+		this.props.onRecordFT({number: this.state.playerSelected, made: true});
+		$('.free-throw-input').click();
 	},
-	handleMissedClick: function(player) {
+	handleMissedClick: function(e) {
 		e.preventDefault();
 		e.stopPropagation();
+		this.props.onRecordFT({number: this.state.playerSelected, made: false});
+		$('.free-throw-input').click();
 	},
 	render: function() {
 		return (
-			<div className="free-throw-input">
-				<DropdownButton bsStyle="primary" title="Free Throw" dropup>
+			<div className="free-throw-input" onClick={this.toggleFreeThrow}>
+				<DropdownButton className="free-throw-toggle" bsStyle="primary" title="Free Throw" dropup>
 					{this.props.data.map(function(player, i) {
 						if(player.active === "true")
 							return (
-								<MenuItem onClick={this.handleSelectPlayer.bind(this,player.number)} eventKey={i} key={i}>
+								<MenuItem className="free-throw-option"
+											onClick={this.handleSelectPlayer.bind(this,player.number)}
+											eventKey={i}
+											key={i}>
 									{this.state.playerSelected === player.number ?
 										<div>
 											<Button bsStyle="success"
 															bsSize="xsmall"
-															onClick={this.handleMadeClick}>
-												<i className="fa fa-fw fa-circle"></i> MADE
+															onClick={this.handleMadeClick}
+															style={{marginRight: '10px'}}>
+												MADE
 											</Button>
 											<Button bsStyle="danger"
 															bsSize="xsmall"
 															onClick={this.handleMissedClick}>
-												<i className="fa fa-fw fa-times"></i> MISSED
+												MISSED
 											</Button>
 										</div> :
 										"#" + player.number + " " + player.name}
@@ -493,9 +532,9 @@ var ShotChartAssisterModal = React.createClass({
 });
 
 var NonShootingStatsInput = React.createClass({
-	recordStat: function(player, stat) {
+	recordStat: function(player, stat, index) {
 		this.props.onRecordStat(player, stat);
-		$('.dropdown-toggle').blur();
+		$('.dropdown-toggle')[index+1].click();
 	},
 	render: function() {
 		var statsArray = ['REB', 'STL', 'BLK', 'TO', 'Foul'];
@@ -510,7 +549,7 @@ var NonShootingStatsInput = React.createClass({
 								{_this.props.data.map(function(player, i) {
 									if(player.active === "true")
 										return (
-											<MenuItem onClick={_this.recordStat.bind(_this,player.number,stat)} eventKey={i} key={i}>
+											<MenuItem onClick={_this.recordStat.bind(_this,player.number,stat,statIndex)} eventKey={i} key={i}>
 												{"#" + player.number + " " + player.name}
 											</MenuItem>
 										);

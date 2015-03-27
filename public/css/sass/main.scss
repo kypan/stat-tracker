@@ -80,10 +80,9 @@
 			}
 		}
 	}
-	.clock{
-		zoom: 0.4;
-		-moz-transform: scale(0.4);
-	}
+	// .clock{
+
+	// // }
 	.shot-chart-container {
 		.shot-chart-title {
 			font-size: 18px;
@@ -107,6 +106,11 @@
 				left: 10px;
 				bottom: 10px;
 				cursor: pointer !important;
+				li {
+					a{
+						outline: none;
+					}
+				}
 			}
 			.shot-chart-map{
 				position: absolute;
@@ -197,7 +201,7 @@
 	}
 	.reset-btn{
 		position: absolute;
-		top: 20px;
+		bottom: 20px;
 		right: 20px;
 	}
 }

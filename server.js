@@ -65,6 +65,21 @@ app.post('/stats/recordShot', function(req, res) {
   });
 });
 
+app.post('/stats/recordFT', function(req, res) {
+  fs.readFile('stats.json', function(err, data) {
+    var stats = JSON.parse(data);
+    var i = _.findIndex(stats, function(player) {
+      return player.number === req.body.number;
+    });
+    stats[i].attemptedFT.push(_.omit(req.body, 'number'));
+    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(JSON.stringify(stats));
+    });
+  });
+});
+
 app.post('/stats/recordStat', function(req, res) {
   fs.readFile('stats.json', function(err, data) {
     var stats = JSON.parse(data);

@@ -2,7 +2,7 @@
     {
         "number": "0",
         "name": "KPan",
-        "active": "false",
+        "active": "true",
         "attemptedFG": [
             {
                 "x": "135",
@@ -50,8 +50,24 @@
                 "assistedBy": "11"
             }
         ],
-        "attemptedFT": [],
-        "rebounds": "0",
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "2",
         "assists": 4,
         "steals": 1,
         "blocks": "0",
@@ -100,9 +116,27 @@
                 "y": "-294",
                 "made": "true",
                 "assistedBy": "4"
+            },
+            {
+                "x": "-105.5",
+                "y": "-34",
+                "made": "false"
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
         "rebounds": "0",
         "assists": "0",
         "steals": "0",
@@ -113,7 +147,7 @@
     {
         "number": "4",
         "name": "David",
-        "active": "true",
+        "active": "false",
         "attemptedFG": [
             {
                 "x": "-4",
@@ -204,12 +238,24 @@
                 "y": "-315",
                 "made": "true",
                 "assistedBy": "11"
+            },
+            {
+                "x": "-156.5",
+                "y": "-228",
+                "made": "false"
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
         "rebounds": "0",
-        "assists": 1,
-        "steals": "0",
+        "assists": "2",
+        "steals": "2",
         "blocks": "0",
         "turnovers": "1",
         "fouls": "0"
@@ -288,13 +334,17 @@
                 "made": "false"
             }
         ],
-        "attemptedFT": [],
-        "rebounds": 1,
+        "attemptedFT": [
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "3",
         "assists": "2",
         "steals": "0",
         "blocks": "0",
         "turnovers": "0",
-        "fouls": "0"
+        "fouls": "1"
     },
     {
         "number": "13",
@@ -330,7 +380,7 @@
     {
         "number": "22",
         "name": "Paul",
-        "active": "true",
+        "active": "false",
         "attemptedFG": [
             {
                 "x": "-53",
@@ -402,7 +452,7 @@
     {
         "number": "31",
         "name": "Patrick",
-        "active": "false",
+        "active": "true",
         "attemptedFG": [
             {
                 "x": "35",
@@ -420,6 +470,12 @@
                 "x": "196",
                 "y": "-151",
                 "made": "false"
+            },
+            {
+                "x": "83.5",
+                "y": "-143",
+                "made": "true",
+                "assistedBy": "5"
             }
         ],
         "attemptedFT": [],
