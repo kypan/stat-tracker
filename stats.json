@@ -67,11 +67,11 @@
                 "made": "true"
             }
         ],
-        "rebounds": "2",
+        "rebounds": "5",
         "assists": 4,
-        "steals": 1,
-        "blocks": "0",
-        "turnovers": 1,
+        "steals": "2",
+        "blocks": "1",
+        "turnovers": "2",
         "fouls": 1
     },
     {
@@ -135,14 +135,20 @@
             },
             {
                 "made": "true"
+            },
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
             }
         ],
-        "rebounds": "0",
+        "rebounds": "1",
         "assists": "0",
         "steals": "0",
-        "blocks": "0",
+        "blocks": "1",
         "turnovers": "0",
-        "fouls": "1"
+        "fouls": "2"
     },
     {
         "number": "4",
@@ -185,7 +191,7 @@
         "attemptedFT": [],
         "rebounds": "0",
         "assists": 2,
-        "steals": 1,
+        "steals": "3",
         "blocks": "0",
         "turnovers": "0",
         "fouls": "0"
@@ -257,7 +263,7 @@
         "assists": "2",
         "steals": "2",
         "blocks": "0",
-        "turnovers": "1",
+        "turnovers": "2",
         "fouls": "0"
     },
     {
@@ -293,7 +299,17 @@
                 "assistedBy": ""
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
         "rebounds": "0",
         "assists": 1,
         "steals": "0",
@@ -339,11 +355,11 @@
                 "made": "true"
             }
         ],
-        "rebounds": "3",
+        "rebounds": "4",
         "assists": "2",
         "steals": "0",
         "blocks": "0",
-        "turnovers": "0",
+        "turnovers": "1",
         "fouls": "1"
     },
     {
@@ -369,12 +385,19 @@
                 "assistedBy": ""
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            }
+        ],
         "rebounds": "0",
         "assists": 1,
         "steals": "0",
         "blocks": "1",
-        "turnovers": "0",
+        "turnovers": "1",
         "fouls": "1"
     },
     {
@@ -406,10 +429,10 @@
             }
         ],
         "attemptedFT": [],
-        "rebounds": "0",
+        "rebounds": "1",
         "assists": 1,
         "steals": "0",
-        "blocks": "0",
+        "blocks": "1",
         "turnovers": "0",
         "fouls": 1
     },
@@ -442,10 +465,10 @@
             }
         ],
         "attemptedFT": [],
-        "rebounds": "0",
+        "rebounds": "1",
         "assists": "0",
         "steals": "0",
-        "blocks": "0",
+        "blocks": "1",
         "turnovers": "0",
         "fouls": "0"
     },
@@ -478,11 +501,18 @@
                 "assistedBy": "5"
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
         "rebounds": "0",
         "assists": "0",
         "steals": "0",
-        "blocks": 1,
+        "blocks": "2",
         "turnovers": "0",
         "fouls": "0"
     },

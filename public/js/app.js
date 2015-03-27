@@ -111,7 +111,10 @@ var Main = React.createClass({
 				</div>
 				<div id="right-column">
 					<ShotChart data={this.state.data} onRecordShot={this.handleRecordShot} onRecordFT={this.handleRecordFT} ref="shotChart"/>
-					<NonShootingStatsInput data={this.state.data} onRecordStat={this.handleRecordStat} ref="statsInput" />
+					<NonShootingStatsInput data={this.state.data}
+																	onRecordStat={this.handleRecordStat}
+																	onRecordCommandFT={this.handleRecordFT}
+																	ref="statsInput" />
 				</div>
 				<button className="btn btn-danger reset-btn" onClick={this.handleResetStats} ref="resetButton">
 					<i className="fa fa-fw fa-refresh"></i> RESET STATS
@@ -532,9 +535,95 @@ var ShotChartAssisterModal = React.createClass({
 });
 
 var NonShootingStatsInput = React.createClass({
+	getInitialState: function() {
+		return {statCommand: '', commandError: false};
+	},
+	// componentWillMount: function() {
+	// 	_.forEach(this.props.data, function(player) {
+	// 		this.playerNames.push(player.name);
+	// 	});
+	// },
 	recordStat: function(player, stat, index) {
 		this.props.onRecordStat(player, stat);
-		$('.dropdown-toggle')[index+1].click();
+		var button = $('.dropdown-toggle')[index+1]
+		button.click();
+		button.blur();
+	},
+	handleFocusInput: function() {
+		this.setState({statCommand: ''}, function() {
+			React.findDOMNode(this.refs.statCommandInput).focus();
+		});
+	},
+	handleChangeCommand: function(e) {
+		this.setState({statCommand: e.target.value});
+	},
+	handleCommandSubmit: function(e) {
+		var _this = this;
+		if(e.keyCode !== 13)
+			return;
+		var player = '';
+		var stat = '';
+		var made = null;
+		var commandArray = this.state.statCommand.toLowerCase().split(" ");
+		_.forEach(commandArray, function(str) {
+			var nameToNumber = null;
+			_.forEach(_this.props.data, function(p) {
+				if(p.name.toLowerCase() === str || p.number === str || (str[0] === '#' && p.number === str.slice(1,str.length))) {
+					player = p.number;
+					return;
+				}
+			});
+			if(str === 'made' || str === 'make')
+				made = true;
+			else if(str === 'miss' || str === 'missed')
+				made = false;
+			else {
+				switch(str) {
+					case 'ft':
+					case 'freethrow':
+						stat = 'FT'
+						break;
+					case 'reb':
+					case 'rebound':
+						stat = 'REB'
+						break;
+					case 'stl':
+					case 'steal':
+						stat = 'STL'
+						break;
+					case 'blk':
+					case 'block':
+						stat = 'BLK'
+						break;
+					case 'to':
+					case 'turnover':
+						stat = 'TO'
+						break;
+					case 'pf':
+					case 'foul':
+						stat = 'Foul'
+						break;
+					default:
+						break;
+				}
+			}
+		});
+		console.log(player);
+		console.log(stat);
+		console.log(made);
+		if(!player || !stat || (stat === 'FT' && made === null)) {
+			this.setState({commandError: true});
+			return;
+		}
+		else if(stat === 'FT') {
+			this.props.onRecordCommandFT({number: player, made: made});
+			this.setState({commandError: false});
+		}
+		else {
+			this.props.onRecordStat(player, stat);
+			this.setState({commandError: false});
+		}
+		this.handleFocusInput();
 	},
 	render: function() {
 		var statsArray = ['REB', 'STL', 'BLK', 'TO', 'Foul'];
@@ -558,6 +647,14 @@ var NonShootingStatsInput = React.createClass({
 						);
 					})}
 				</ButtonToolbar>
+				<input id="stat-command-input"
+								value={this.state.statCommand}
+								onClick={this.handleFocusInput}
+								onFocus={this.handleFocusInput}
+								onChange={this.handleChangeCommand}
+								onKeyDown={this.handleCommandSubmit}
+								ref="statCommandInput" />
+				{this.state.commandError ? <div>Not a valid command</div> : null}
 			</div>
 		);
 	}
