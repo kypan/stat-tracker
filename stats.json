@@ -1,8 +1,8 @@
 [
     {
         "number": "0",
-        "name": "KPan",
-        "active": "true",
+        "name": "Kevin",
+        "active": "false",
         "attemptedFG": [
             {
                 "x": "135",
@@ -65,13 +65,16 @@
             },
             {
                 "made": "true"
+            },
+            {
+                "made": "false"
             }
         ],
         "rebounds": "5",
         "assists": 4,
         "steals": "2",
-        "blocks": "1",
-        "turnovers": "2",
+        "blocks": "2",
+        "turnovers": "4",
         "fouls": 1
     },
     {
@@ -141,6 +144,12 @@
             },
             {
                 "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
             }
         ],
         "rebounds": "1",
@@ -153,7 +162,7 @@
     {
         "number": "4",
         "name": "David",
-        "active": "false",
+        "active": "true",
         "attemptedFG": [
             {
                 "x": "-4",
@@ -188,7 +197,14 @@
                 "made": "false"
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            }
+        ],
         "rebounds": "0",
         "assists": 2,
         "steals": "3",
@@ -257,6 +273,9 @@
             },
             {
                 "made": "true"
+            },
+            {
+                "made": "true"
             }
         ],
         "rebounds": "0",
@@ -313,8 +332,8 @@
         "rebounds": "0",
         "assists": 1,
         "steals": "0",
-        "blocks": "0",
-        "turnovers": "0",
+        "blocks": "1",
+        "turnovers": "1",
         "fouls": "0"
     },
     {
@@ -365,7 +384,7 @@
     {
         "number": "13",
         "name": "Charles",
-        "active": "false",
+        "active": "true",
         "attemptedFG": [
             {
                 "x": "-140",
@@ -397,7 +416,7 @@
         "assists": 1,
         "steals": "0",
         "blocks": "1",
-        "turnovers": "1",
+        "turnovers": "2",
         "fouls": "1"
     },
     {
@@ -428,7 +447,11 @@
                 "assistedBy": "0"
             }
         ],
-        "attemptedFT": [],
+        "attemptedFT": [
+            {
+                "made": "false"
+            }
+        ],
         "rebounds": "1",
         "assists": 1,
         "steals": "0",
@@ -438,7 +461,7 @@
     },
     {
         "number": "23",
-        "name": "KSwang",
+        "name": "Amos",
         "active": "false",
         "attemptedFG": [
             {
@@ -475,7 +498,7 @@
     {
         "number": "31",
         "name": "Patrick",
-        "active": "true",
+        "active": "false",
         "attemptedFG": [
             {
                 "x": "35",
@@ -507,13 +530,16 @@
             },
             {
                 "made": "true"
+            },
+            {
+                "made": "false"
             }
         ],
-        "rebounds": "0",
+        "rebounds": "1",
         "assists": "0",
         "steals": "0",
         "blocks": "2",
-        "turnovers": "0",
+        "turnovers": "1",
         "fouls": "0"
     },
     {

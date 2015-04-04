@@ -1,0 +1,608 @@
+[
+    {
+        "number": "0",
+        "name": "Clark Jr.",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "249.5",
+                "y": "-182",
+                "made": "true",
+                "assistedBy": "20"
+            },
+            {
+                "x": "-9.5",
+                "y": "-81",
+                "made": "true",
+                "assistedBy": "45"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "false"
+            }
+        ],
+        "rebounds": "0",
+        "assists": "2",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "2",
+        "name": "Bess",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "3",
+        "name": "Ellis III",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "-241.5",
+                "y": "-193",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "1",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "5",
+        "name": "Forbes",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-212.5",
+                "y": "-229",
+                "made": "true",
+                "assistedBy": "0"
+            },
+            {
+                "x": "49.5",
+                "y": "-148",
+                "made": "false"
+            },
+            {
+                "x": "300.5",
+                "y": "-77",
+                "made": "false"
+            },
+            {
+                "x": "304.5",
+                "y": "-35",
+                "made": "true",
+                "assistedBy": "20"
+            },
+            {
+                "x": "307.5",
+                "y": "-46",
+                "made": "true",
+                "assistedBy": "45"
+            },
+            {
+                "x": "241.5",
+                "y": "-195",
+                "made": "true",
+                "assistedBy": "45"
+            },
+            {
+                "x": "-292.5",
+                "y": "-114",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "0",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "1",
+        "fouls": "1"
+    },
+    {
+        "number": "10",
+        "name": "Costello",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "132.5",
+                "y": "-50",
+                "made": "false"
+            },
+            {
+                "x": "20.5",
+                "y": "-34",
+                "made": "true",
+                "assistedBy": "45"
+            },
+            {
+                "x": "27.5",
+                "y": "-39",
+                "made": "true",
+                "assistedBy": "20"
+            },
+            {
+                "x": "-11.5",
+                "y": "-31",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "2",
+        "assists": "2",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "3"
+    },
+    {
+        "number": "11",
+        "name": "Nairn Jr.",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "-26.5",
+                "y": "-49",
+                "made": "false"
+            },
+            {
+                "x": "76.5",
+                "y": "-119",
+                "made": "true",
+                "assistedBy": ""
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "0",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "2",
+        "fouls": "1"
+    },
+    {
+        "number": "13",
+        "name": "Bohnhoff",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "14",
+        "name": "Harris",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "15",
+        "name": "Wetzel",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "20",
+        "name": "Trice",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-199.5",
+                "y": "-247",
+                "made": "false"
+            },
+            {
+                "x": "-185.5",
+                "y": "-254",
+                "made": "true",
+                "assistedBy": "34"
+            },
+            {
+                "x": "-58.5",
+                "y": "-290",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-108.5",
+                "y": "-295",
+                "made": "false"
+            },
+            {
+                "x": "304.5",
+                "y": "-58",
+                "made": "true",
+                "assistedBy": "0"
+            },
+            {
+                "x": "17.5",
+                "y": "-47",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "106.5",
+                "y": "-292",
+                "made": "false"
+            },
+            {
+                "x": "-296.5",
+                "y": "-415",
+                "made": "false"
+            },
+            {
+                "x": "8.5",
+                "y": "-113",
+                "made": "false"
+            },
+            {
+                "x": "-304.5",
+                "y": "-83",
+                "made": "false"
+            },
+            {
+                "x": "-226.5",
+                "y": "-208",
+                "made": "true",
+                "assistedBy": "45"
+            },
+            {
+                "x": "-86.5",
+                "y": "-303",
+                "made": "false"
+            },
+            {
+                "x": "35.5",
+                "y": "-48",
+                "made": "false"
+            },
+            {
+                "x": "152.5",
+                "y": "-268",
+                "made": "false"
+            },
+            {
+                "x": "-55.5",
+                "y": "-463",
+                "made": "false"
+            },
+            {
+                "x": "49.5",
+                "y": "-52",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "2",
+        "assists": "4",
+        "steals": "1",
+        "blocks": "1",
+        "turnovers": "1",
+        "fouls": "0"
+    },
+    {
+        "number": "22",
+        "name": "Dawson",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "37.5",
+                "y": "-56",
+                "made": "false"
+            },
+            {
+                "x": "0.5",
+                "y": "-75",
+                "made": "false"
+            },
+            {
+                "x": "80.5",
+                "y": "-72",
+                "made": "false"
+            },
+            {
+                "x": "-41.5",
+                "y": "-68",
+                "made": "true",
+                "assistedBy": "10"
+            },
+            {
+                "x": "-83.5",
+                "y": "-186",
+                "made": "false"
+            },
+            {
+                "x": "75.5",
+                "y": "-48",
+                "made": "false"
+            },
+            {
+                "x": "-45.5",
+                "y": "-54",
+                "made": "true",
+                "assistedBy": "45"
+            },
+            {
+                "x": "-16.5",
+                "y": "-39",
+                "made": "false"
+            },
+            {
+                "x": "11.5",
+                "y": "-39",
+                "made": "true",
+                "assistedBy": "20"
+            },
+            {
+                "x": "-64.5",
+                "y": "-176",
+                "made": "false"
+            },
+            {
+                "x": "-25.5",
+                "y": "-88",
+                "made": "true",
+                "assistedBy": ""
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            }
+        ],
+        "rebounds": "13",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "5",
+        "turnovers": "3",
+        "fouls": "2"
+    },
+    {
+        "number": "25",
+        "name": "Goins",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "30",
+        "name": "Van Dyk",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "34",
+        "name": "Schilling",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "28.5",
+                "y": "-75",
+                "made": "false"
+            },
+            {
+                "x": "2.5",
+                "y": "-50",
+                "made": "true",
+                "assistedBy": "3"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "2",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "2"
+    },
+    {
+        "number": "41",
+        "name": "Wollenman",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "45",
+        "name": "Valentine",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-74.5",
+                "y": "-63",
+                "made": "false"
+            },
+            {
+                "x": "217.5",
+                "y": "-236",
+                "made": "false"
+            },
+            {
+                "x": "80.5",
+                "y": "-303",
+                "made": "false"
+            },
+            {
+                "x": "24.5",
+                "y": "-46",
+                "made": "true",
+                "assistedBy": "10"
+            },
+            {
+                "x": "142.5",
+                "y": "-167",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "34.5",
+                "y": "-153",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-2.5",
+                "y": "-316",
+                "made": "true",
+                "assistedBy": "11"
+            },
+            {
+                "x": "-3.5",
+                "y": "-344",
+                "made": "false"
+            },
+            {
+                "x": "11.5",
+                "y": "-133",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "16.5",
+                "y": "-56",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-4.5",
+                "y": "-115",
+                "made": "false"
+            },
+            {
+                "x": "71.5",
+                "y": "-236",
+                "made": "false"
+            },
+            {
+                "x": "-25.5",
+                "y": "-46",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-5.5",
+                "y": "-155",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "9",
+        "assists": "6",
+        "steals": "0",
+        "blocks": "1",
+        "turnovers": "3",
+        "fouls": "3"
+    }
+]

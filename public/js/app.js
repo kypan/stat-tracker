@@ -27,6 +27,19 @@ var Main = React.createClass({
 	componentDidMount: function() {
 		this.loadStatsFromServer();
     setInterval(this.loadStatsFromServer, this.props.pollInterval);
+    $(document).keydown(function(e) {
+			if(e.which === 9) {
+				e.preventDefault();
+				$('#stat-command-input').focus();
+				$('#stat-command-input').value='';
+			}
+			else if(e.which >= 48 && e.which <= 90 && e.target.id !== '#stat-command-input') {
+				$('#stat-command-input').focus();
+				$('#stat-command-input').value=String.fromCharCode(e.which);
+			}
+			else
+				return;
+		});
 	},
 	handleRecordShot: function(FGAttempt) {
 		$.ajax({
@@ -538,11 +551,6 @@ var NonShootingStatsInput = React.createClass({
 	getInitialState: function() {
 		return {statCommand: '', commandError: false};
 	},
-	// componentWillMount: function() {
-	// 	_.forEach(this.props.data, function(player) {
-	// 		this.playerNames.push(player.name);
-	// 	});
-	// },
 	recordStat: function(player, stat, index) {
 		this.props.onRecordStat(player, stat);
 		var button = $('.dropdown-toggle')[index+1]
@@ -573,9 +581,9 @@ var NonShootingStatsInput = React.createClass({
 					return;
 				}
 			});
-			if(str === 'made' || str === 'make')
+			if(str === 'made' || str === 'make' || str === 'yes' || str === 'y')
 				made = true;
-			else if(str === 'miss' || str === 'missed')
+			else if(str === 'miss' || str === 'missed' || str === 'no' || str === 'n')
 				made = false;
 			else {
 				switch(str) {
@@ -608,9 +616,6 @@ var NonShootingStatsInput = React.createClass({
 				}
 			}
 		});
-		console.log(player);
-		console.log(stat);
-		console.log(made);
 		if(!player || !stat || (stat === 'FT' && made === null)) {
 			this.setState({commandError: true});
 			return;
@@ -649,12 +654,13 @@ var NonShootingStatsInput = React.createClass({
 				</ButtonToolbar>
 				<input id="stat-command-input"
 								value={this.state.statCommand}
+								placeholder="Start typing..."
 								onClick={this.handleFocusInput}
 								onFocus={this.handleFocusInput}
 								onChange={this.handleChangeCommand}
 								onKeyDown={this.handleCommandSubmit}
 								ref="statCommandInput" />
-				{this.state.commandError ? <div>Not a valid command</div> : null}
+				{this.state.commandError ? <div className="error-message">Not a valid command</div> : null}
 			</div>
 		);
 	}

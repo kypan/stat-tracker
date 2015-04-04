@@ -1,0 +1,513 @@
+[
+    {
+        "number": "2",
+        "name": "Cook",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-222",
+                "y": "-213",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "287",
+                "y": "-116",
+                "made": "false"
+            },
+            {
+                "x": "21",
+                "y": "-37",
+                "made": "false"
+            },
+            {
+                "x": "4",
+                "y": "-333",
+                "made": "false"
+            },
+            {
+                "x": "-24",
+                "y": "-96",
+                "made": "false"
+            },
+            {
+                "x": "234",
+                "y": "-194",
+                "made": "false"
+            },
+            {
+                "x": "34",
+                "y": "-72",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "219",
+                "y": "-211",
+                "made": "false"
+            },
+            {
+                "x": "-40",
+                "y": "-160",
+                "made": "false"
+            },
+            {
+                "x": "-4",
+                "y": "-178",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "false"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "4",
+        "assists": "2",
+        "steals": "1",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "3",
+        "name": "Allen",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "34",
+                "y": "-248",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "5",
+        "name": "T. Jones",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "19",
+                "y": "-77",
+                "made": "false"
+            },
+            {
+                "x": "8",
+                "y": "-125",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "21",
+                "y": "-75",
+                "made": "true",
+                "assistedBy": "13"
+            },
+            {
+                "x": "-153",
+                "y": "-267",
+                "made": "true",
+                "assistedBy": "2"
+            },
+            {
+                "x": "116",
+                "y": "-286",
+                "made": "false"
+            },
+            {
+                "x": "-76",
+                "y": "-118",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-76",
+                "y": "-58",
+                "made": "false"
+            },
+            {
+                "x": "-82",
+                "y": "-40",
+                "made": "false"
+            },
+            {
+                "x": "26",
+                "y": "-46",
+                "made": "false"
+            },
+            {
+                "x": "-20",
+                "y": "-200",
+                "made": "false"
+            },
+            {
+                "x": "-29",
+                "y": "-38",
+                "made": "true",
+                "assistedBy": "21"
+            },
+            {
+                "x": "-60",
+                "y": "-327",
+                "made": "false"
+            },
+            {
+                "x": "-60",
+                "y": "-52",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "3",
+        "assists": "4",
+        "steals": "1",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "2"
+    },
+    {
+        "number": "12",
+        "name": "Winslow",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-124",
+                "y": "-285",
+                "made": "true",
+                "assistedBy": "15"
+            },
+            {
+                "x": "21",
+                "y": "-178",
+                "made": "false"
+            },
+            {
+                "x": "16",
+                "y": "-105",
+                "made": "false"
+            },
+            {
+                "x": "-39",
+                "y": "-92",
+                "made": "false"
+            },
+            {
+                "x": "195",
+                "y": "-234",
+                "made": "false"
+            },
+            {
+                "x": "-10",
+                "y": "-50",
+                "made": "false"
+            },
+            {
+                "x": "-28",
+                "y": "-308",
+                "made": "false"
+            },
+            {
+                "x": "-6",
+                "y": "-98",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-36",
+                "y": "-70",
+                "made": "false"
+            },
+            {
+                "x": "-8",
+                "y": "-35",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-75",
+                "y": "-218",
+                "made": "false"
+            },
+            {
+                "x": "-108",
+                "y": "-287",
+                "made": "true",
+                "assistedBy": ""
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "6",
+        "assists": "1",
+        "steals": "1",
+        "blocks": "1",
+        "turnovers": "1",
+        "fouls": "1"
+    },
+    {
+        "number": "13",
+        "name": "M. Jones",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "-24",
+                "y": "-51",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "-27",
+                "y": "-77",
+                "made": "false"
+            },
+            {
+                "x": "-301",
+                "y": "-78",
+                "made": "true",
+                "assistedBy": "12"
+            },
+            {
+                "x": "245",
+                "y": "-187",
+                "made": "false"
+            },
+            {
+                "x": "204",
+                "y": "-225",
+                "made": "false"
+            },
+            {
+                "x": "303",
+                "y": "-47",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "7",
+                "y": "-324",
+                "made": "true",
+                "assistedBy": "2"
+            },
+            {
+                "x": "279",
+                "y": "-125",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "135",
+                "y": "-279",
+                "made": "false"
+            },
+            {
+                "x": "18",
+                "y": "-43",
+                "made": "true",
+                "assistedBy": ""
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "3",
+        "assists": "1",
+        "steals": "3",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "2"
+    },
+    {
+        "number": "15",
+        "name": "Okafor",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "1",
+                "y": "-56",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "25",
+                "y": "-60",
+                "made": "true",
+                "assistedBy": "5"
+            },
+            {
+                "x": "-17",
+                "y": "-41",
+                "made": "false"
+            },
+            {
+                "x": "56",
+                "y": "-47",
+                "made": "false"
+            },
+            {
+                "x": "-19",
+                "y": "-37",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "53",
+                "y": "-57",
+                "made": "false"
+            },
+            {
+                "x": "9",
+                "y": "-152",
+                "made": "false"
+            },
+            {
+                "x": "56",
+                "y": "-84",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-100",
+                "y": "-124",
+                "made": "false"
+            },
+            {
+                "x": "-211",
+                "y": "-54",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "false"
+            },
+            {
+                "made": "false"
+            }
+        ],
+        "rebounds": "8",
+        "assists": "1",
+        "steals": "1",
+        "blocks": "1",
+        "turnovers": "1",
+        "fouls": "2"
+    },
+    {
+        "number": "21",
+        "name": "Jefferson",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "3",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "1"
+    },
+    {
+        "number": "30",
+        "name": "Ojeleye",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "40",
+        "name": "Plumlee",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "1",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "42",
+        "name": "Kelly",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "45",
+        "name": "Pagliuca",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    }
+]

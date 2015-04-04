@@ -5,12 +5,14 @@ var bodyParser = require('body-parser');
 var app = express();
 var _ = require('lodash');
 
+var file = 'stats2.json';
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/stats', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
+  fs.readFile(file, function(err, data) {
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   });
@@ -18,7 +20,7 @@ app.get('/stats', function(req, res) {
 
 app.put('/stats/reset', function(req, res) {
   fs.readFile('statsTemplate.json', function(err, data) {
-    fs.writeFile('stats.json', data, function(err) {
+    fs.writeFile(file, data, function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
       res.send(data);
@@ -27,7 +29,7 @@ app.put('/stats/reset', function(req, res) {
 });
 
 app.put('/stats/subPlayer', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
+  fs.readFile(file, function(err, data) {
     var stats = JSON.parse(data);
     var i = _.findIndex(stats, function(player) {
       return player.number === req.body.number;
@@ -36,7 +38,7 @@ app.put('/stats/subPlayer', function(req, res) {
       stats[i].active = "false";
     else
       stats[i].active = "true";
-    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+    fs.writeFile(file, JSON.stringify(stats, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
       res.send(JSON.stringify(stats));
@@ -45,7 +47,7 @@ app.put('/stats/subPlayer', function(req, res) {
 });
 
 app.post('/stats/recordShot', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
+  fs.readFile(file, function(err, data) {
     var stats = JSON.parse(data);
     var i = _.findIndex(stats, function(player) {
       return player.number === req.body.number;
@@ -57,7 +59,7 @@ app.post('/stats/recordShot', function(req, res) {
       });
       stats[j].assists = (Number(stats[j].assists) + 1).toString();
     }
-    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+    fs.writeFile(file, JSON.stringify(stats, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
       res.send(JSON.stringify(stats));
@@ -66,13 +68,13 @@ app.post('/stats/recordShot', function(req, res) {
 });
 
 app.post('/stats/recordFT', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
+  fs.readFile(file, function(err, data) {
     var stats = JSON.parse(data);
     var i = _.findIndex(stats, function(player) {
       return player.number === req.body.number;
     });
     stats[i].attemptedFT.push(_.omit(req.body, 'number'));
-    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+    fs.writeFile(file, JSON.stringify(stats, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
       res.send(JSON.stringify(stats));
@@ -81,7 +83,7 @@ app.post('/stats/recordFT', function(req, res) {
 });
 
 app.post('/stats/recordStat', function(req, res) {
-  fs.readFile('stats.json', function(err, data) {
+  fs.readFile(file, function(err, data) {
     var stats = JSON.parse(data);
     var i = _.findIndex(stats, function(player) {
       return player.number === req.body.number;
@@ -105,7 +107,7 @@ app.post('/stats/recordStat', function(req, res) {
       default:
         break;
     }
-    fs.writeFile('stats.json', JSON.stringify(stats, null, 4), function(err) {
+    fs.writeFile(file, JSON.stringify(stats, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Cache-Control', 'no-cache');
       res.send(JSON.stringify(stats));
