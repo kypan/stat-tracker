@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var _ = require('lodash');
 
-var file = 'stats2.json';
+var file = 'stats.json';
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());

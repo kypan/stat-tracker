@@ -1,0 +1,440 @@
+[
+    {
+        "number": "0",
+        "name": "Kevin",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "105.5",
+                "y": "-222",
+                "made": "false"
+            },
+            {
+                "x": "-114.5",
+                "y": "-283",
+                "made": "false"
+            },
+            {
+                "x": "-231.5",
+                "y": "-208",
+                "made": "false"
+            },
+            {
+                "x": "50.5",
+                "y": "-94",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-133.5",
+                "y": "-289",
+                "made": "false"
+            },
+            {
+                "x": "125.5",
+                "y": "-294",
+                "made": "true",
+                "assistedBy": "66"
+            },
+            {
+                "x": "164.5",
+                "y": "-265",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "1",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "2",
+        "fouls": "3"
+    },
+    {
+        "number": "3",
+        "name": "Edmond",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "93.5",
+                "y": "-299",
+                "made": "false"
+            },
+            {
+                "x": "-307.5",
+                "y": "-46",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "3",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "1"
+    },
+    {
+        "number": "4",
+        "name": "David",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "143.5",
+                "y": "-116",
+                "made": "false"
+            },
+            {
+                "x": "-88.5",
+                "y": "-325",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "2"
+    },
+    {
+        "number": "5",
+        "name": "Christian",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "-73.5",
+                "y": "-301",
+                "made": "false"
+            },
+            {
+                "x": "-21.5",
+                "y": "-31",
+                "made": "false"
+            },
+            {
+                "x": "201.5",
+                "y": "-237",
+                "made": "true",
+                "assistedBy": "66"
+            },
+            {
+                "x": "118.5",
+                "y": "-334",
+                "made": "false"
+            },
+            {
+                "x": "173.5",
+                "y": "-276",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-168.5",
+                "y": "-284",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "1",
+        "fouls": "1"
+    },
+    {
+        "number": "10",
+        "name": "Jisu",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "278.5",
+                "y": "-125",
+                "made": "false"
+            },
+            {
+                "x": "8.5",
+                "y": "-38",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "24.5",
+                "y": "-34",
+                "made": "false"
+            },
+            {
+                "x": "-86.5",
+                "y": "-38",
+                "made": "true",
+                "assistedBy": "31"
+            },
+            {
+                "x": "186.5",
+                "y": "-257",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "1",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "1",
+        "turnovers": "0",
+        "fouls": "2"
+    },
+    {
+        "number": "11",
+        "name": "Austin",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "13",
+        "name": "Charles",
+        "active": "false",
+        "attemptedFG": [],
+        "attemptedFT": [],
+        "rebounds": "0",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "0",
+        "fouls": "0"
+    },
+    {
+        "number": "22",
+        "name": "Paul",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "22.5",
+                "y": "-53",
+                "made": "false"
+            },
+            {
+                "x": "-41.5",
+                "y": "-74",
+                "made": "false"
+            },
+            {
+                "x": "-53.5",
+                "y": "-101",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-29.5",
+                "y": "-70",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "56.5",
+                "y": "-56",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "1.5",
+                "y": "-80",
+                "made": "false"
+            },
+            {
+                "x": "-96.5",
+                "y": "-73",
+                "made": "false"
+            },
+            {
+                "x": "-210.5",
+                "y": "-254",
+                "made": "false"
+            },
+            {
+                "x": "4.5",
+                "y": "-135",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-80.5",
+                "y": "-96",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-152.5",
+                "y": "-70",
+                "made": "false"
+            },
+            {
+                "x": "33.5",
+                "y": "-96",
+                "made": "false"
+            },
+            {
+                "x": "-214.5",
+                "y": "-283",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            },
+            {
+                "made": "true"
+            }
+        ],
+        "rebounds": "11",
+        "assists": "1",
+        "steals": "1",
+        "blocks": "3",
+        "turnovers": "1",
+        "fouls": "1"
+    },
+    {
+        "number": "23",
+        "name": "Amos",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "62.5",
+                "y": "-120",
+                "made": "false"
+            },
+            {
+                "x": "-15.5",
+                "y": "-42",
+                "made": "true",
+                "assistedBy": "0"
+            },
+            {
+                "x": "-129.5",
+                "y": "-133",
+                "made": "false"
+            },
+            {
+                "x": "-2.5",
+                "y": "-54",
+                "made": "true",
+                "assistedBy": "31"
+            },
+            {
+                "x": "-186.5",
+                "y": "-51",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "145.5",
+                "y": "-275",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "1",
+        "assists": "0",
+        "steals": "0",
+        "blocks": "0",
+        "turnovers": "1",
+        "fouls": "1"
+    },
+    {
+        "number": "31",
+        "name": "Patrick",
+        "active": "false",
+        "attemptedFG": [
+            {
+                "x": "25.5",
+                "y": "-33",
+                "made": "false"
+            },
+            {
+                "x": "24.5",
+                "y": "-33",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "31.5",
+                "y": "-35",
+                "made": "true",
+                "assistedBy": "66"
+            },
+            {
+                "x": "-20.5",
+                "y": "-30",
+                "made": "true",
+                "assistedBy": ""
+            },
+            {
+                "x": "-35.5",
+                "y": "-35",
+                "made": "false"
+            },
+            {
+                "x": "-89.5",
+                "y": "-103",
+                "made": "false"
+            },
+            {
+                "x": "298.5",
+                "y": "-121",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "6",
+        "assists": "2",
+        "steals": "1",
+        "blocks": "2",
+        "turnovers": "0",
+        "fouls": "4"
+    },
+    {
+        "number": "66",
+        "name": "Bryan",
+        "active": "true",
+        "attemptedFG": [
+            {
+                "x": "82.5",
+                "y": "-28",
+                "made": "false"
+            },
+            {
+                "x": "-260.5",
+                "y": "-189",
+                "made": "true",
+                "assistedBy": "22"
+            },
+            {
+                "x": "295.5",
+                "y": "-89",
+                "made": "false"
+            }
+        ],
+        "attemptedFT": [],
+        "rebounds": "1",
+        "assists": "3",
+        "steals": "0",
+        "blocks": "1",
+        "turnovers": "0",
+        "fouls": "2"
+    }
+]
